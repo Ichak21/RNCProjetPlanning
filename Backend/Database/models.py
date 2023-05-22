@@ -19,7 +19,7 @@ class Station(Base):
         "secteur.id_secteur"), nullable=False)
 
 
-# Table de description des Organisation
+# Table de description des Organisationa
 class Shift(Base):
     __tablename__ = "shift"
     id_shift = Column(Integer, primary_key=True)
