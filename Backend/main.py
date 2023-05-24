@@ -43,7 +43,7 @@ def readAllSecteur(session: Session = Depends(get_session)):
 @app.get("/setting/secteur/{id_secteur}", response_model=schemas.Secteur)
 def readSecteur(id_secteur: int, session: Session = Depends(get_session)):
     secteur = handlers.SecteurHandler(session=session, model=models.Secteur)
-    return secteur.read(id_secteur=id_secteur)
+    return secteur.read(id=id_secteur)
 
 
 @app.put("/setting/secteur/{id_secteur}", response_model=schemas.Secteur)
