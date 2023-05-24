@@ -12,35 +12,40 @@ class Handler():
         self.model = model
         self.session = session
 
+    def create(self, model_loaded):
+
+        # Add new entry in base table secteur
+        self.session.add(model_loaded)
+        self.session.commit()
+        self.session.refresh(model_loaded)
+
+        # Return message with new secteur
+        return model_loaded
+
+    def readAll(self):
+
+        # Get All Entry From Table
+        listItem = self.session.query(self.model).all()
+        return listItem
+
+    def read(self, id: int):
+        # Get the item from table
+        item = self.session.query(self.model).get(id)
+
+        # check if secteur item with given id exists. If not, raise exception and return 404 not found response
+        if not item:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail=f"Id {id} is not found in table {self.model.__tablename__}")
+
+        return item
+
 
 class SecteurHandler(Handler):
     def create(self, secteur: schemas.SecteurCreate):
+
         # Create new entry for secteur
         newSecteur = self.model(name_secteur=secteur.name_secteur)
-
-        # Add new entry in base table secteur
-        self.session.add(newSecteur)
-        self.session.commit()
-        self.session.refresh(newSecteur)
-
-        # Return message with new secteur
-        return newSecteur
-
-    def readAll(self):
-        # Get All Entry From Table
-        secteurList = self.session.query(self.model).all()
-        return secteurList
-
-    def read(self, id_secteur: int):
-        # Get the secteur from table
-        secteur = self.session.query(self.model).get(id_secteur)
-
-        # check if secteur item with given id exists. If not, raise exception and return 404 not found response
-        if not secteur:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail=f"Secteur_id {id_secteur} not found")
-
-        return secteur
+        return super().create(newSecteur)
 
     def update(self, id_secteur: int, name_secteur: str):
         # get the secteur item with the given id
