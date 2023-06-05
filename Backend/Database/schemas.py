@@ -1,7 +1,5 @@
 from pydantic import BaseModel
 
-# Model SecteurCreation
-
 
 class SecteurCreate(BaseModel):
     name_secteur: str
@@ -15,13 +13,16 @@ class Secteur(SecteurCreate):
 
 
 class StationCreate(BaseModel):
+    id_secteur: int
     name_station: str
     capa_max: int
+
+
+class Station(BaseModel):
     id_secteur: int
-
-
-class Station(StationCreate):
+    name_station: str
     id_station: int
+    capa_max: int
 
     class Config:
         orm_mod = True
