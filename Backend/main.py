@@ -68,13 +68,13 @@ def createSecteur(station: schemas.StationCreate, session: Session = Depends(get
     return newStation.create(station)
 
 
-@app.get("/setting/station",response_model=List[schemas.Station],  status_code=status.HTTP_200_OK)
+@app.get("/setting/station", response_model=List[schemas.Station],  status_code=status.HTTP_200_OK)
 def readAllStation(session: Session = Depends(get_session)):
     allStation = handlers.StationHandler(session=session, model=models.Station)
     return allStation.readAll()
 
 
-@app.get("/setting/station/{id_station}", response_model=schemas.Station)
+@app.get("/setting/station/{id_station}", response_model=schemas.Station,  status_code=status.HTTP_200_OK)
 def readStation(id_station: int, session: Session = Depends(get_session)):
     station = handlers.StationHandler(session=session, model=models.Station)
     return station.read(id=id_station)

@@ -19,10 +19,7 @@ class StationCreate(BaseModel):
 
 
 class Station(BaseModel):
-    id_secteur: int
-    name_station: str
     id_station: int
-    capa_max: int
 
     class Config:
         orm_mod = True
