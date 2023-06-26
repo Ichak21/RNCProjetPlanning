@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from datetime import date
 
 
 class SecteurCreate(BaseModel):
@@ -7,19 +8,140 @@ class SecteurCreate(BaseModel):
 
 class Secteur(SecteurCreate):
     id_secteur: int
+    name_secteur: str
 
     class Config:
         orm_mode = True
 
 
 class StationCreate(BaseModel):
-    id_secteur: int
     name_station: str
     capa_max: int
+    id_secteur: int
 
 
-class Station(BaseModel):
+class Station(StationCreate):
     id_station: int
 
     class Config:
-        orm_mod = True
+        orm_mode = True
+
+
+class ShiftCreate(BaseModel):
+    name_shift: str
+    id_user: int
+
+
+class Shift(ShiftCreate):
+    id_shift: int
+    name_shift: str
+    id_user: int
+
+    class Config:
+        orm_mode = True
+
+
+class UserCreate(BaseModel):
+    id_card: str
+    login: str
+    password: str
+    start_date: date
+    end_date: date
+
+
+class User(UserCreate):
+    id_user: int
+    id_card: str
+    login: str
+    password: str
+    start_date: date
+    end_date: date
+
+    class Config:
+        orm_mode = True
+
+
+class OperateurCreate(BaseModel):
+    id_card: int
+    name_operateur: str
+    id_shift: int
+    home_station: int
+    start_date: date
+    end_date: date
+    isTemp: bool
+    active_status: bool
+
+
+class Operateur(OperateurCreate):
+    id_operateur: int
+    id_card: int
+    name_operateur: str
+    id_shift: int
+    home_station: int
+    start_date: date
+    end_date: date
+    isTemp: bool
+    active_status: bool
+
+    class Config:
+        orm_mode = True
+
+
+class CompetenceCreate(BaseModel):
+    id_station: int
+    level_competence: int
+    last_assesement: date
+    id_operateur: int
+
+
+class Competence(CompetenceCreate):
+    id: int
+    id_station: int
+    level_competence: int
+    last_assesement: date
+    id_operateur: int
+
+    class Config:
+        orm_mode = True
+
+
+class SoftCompetenceCreate(BaseModel):
+    id_station: int
+    level_competence: int
+    last_assesement: date
+    id_operateur: int
+
+
+class SoftCompetence(SoftCompetenceCreate):
+    id: int
+    id_station: int
+    level_competence: int
+    last_assesement: date
+    id_operateur: int
+
+    class Config:
+        orm_mode = True
+
+
+class PlanningCreate(BaseModel):
+    id_operateur: int
+    id_user: int
+    id_shift: int
+    id_station: int
+    date: date
+    week: int
+    day: int
+
+
+class Planning(PlanningCreate):
+    id: int
+    id_operateur: int
+    id_user: int
+    id_shift: int
+    id_station: int
+    date: date
+    week: int
+    day: int
+
+    class Config:
+        orm_mode = True
