@@ -138,6 +138,50 @@ class ShiftHandler(Handler):
         return shift
 
 
+class KeHandler(Handler):
+    def create(self, ke: schemas.KeCreate):
+        newKe = self.model(date_ke=ke.date_ke, ke=ke.ke,
+                           target_ke=ke.target_ke)
+        return super().create(newKe)
+
+    def update(self, id_ke: int, date_ke: date, ke: int, target_ke: int):
+        ke = self.session.query(self.model).get(id_ke)
+
+        if ke:
+            ke.date_ke = date_ke
+            ke.ke = ke
+            ke.target_ke = target_ke
+            self.session.commit()
+
+        if not ke:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail=f"L'élément du ke avec l'ID {dateke} n'a pas été trouvé")
+
+        return ke
+
+
+class QtyHandler(Handler):
+    def create(self, qty: schemas.QtyCreate):
+        newQty = self.model(date_qty=qty.date_qty, qty=qty.qty,
+                            target_qty=qty.target_qty)
+        return super().create(newQty)
+
+    def update(self, id_qty: int, date_qty: date, qty: int, target_qty: int):
+        qty = self.session.query(self.model).get(id_qty)
+
+        if qty:
+            qty.date_qty = date_qty
+            qty.qty = qty
+            qty.target_qty = target_qty
+            self.session.commit()
+
+        if not qty:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail=f"L'élément du qty avec l'ID {dateqty} n'a pas été trouvé")
+
+        return qty
+
+
 class UserHandler(Handler):
     def create(self, user: schemas.UserCreate):
         new_user = self.model(

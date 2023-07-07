@@ -41,6 +41,38 @@ class Shift(ShiftCreate):
         orm_mode = True
 
 
+class KeCreate(BaseModel):
+    date_ke: date
+    ke: int
+    target_ke: int
+
+
+class Ke(KeCreate):
+    id_ke:int
+    date_ke: date
+    ke: int
+    target_ke: int
+
+    class Config:
+        orm_mode = True
+
+
+class QtyCreate(BaseModel):
+    date_qty: date
+    qty: str
+    target_qty: int
+
+
+class Qty(QtyCreate):
+    id_qty:int
+    date_qty: date
+    qty: int
+    target_qty: int
+
+    class Config:
+        orm_mode = True
+
+
 class UserCreate(BaseModel):
     id_card: str
     login: str

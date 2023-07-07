@@ -37,6 +37,22 @@ class User(Base):
     end_date = Column(Date)
 
 
+class Qty(Base):
+    __tablename__ = "qty"
+    id_qty = Column(Integer, primary_key=True)
+    date_qty = Column(Date)
+    qty = Column(Integer)
+    target_qty = Column(Integer)
+
+
+class Ke(Base):
+    __tablename__ = "ke"
+    id_ke = Column(Integer, primary_key=True)
+    date_ke = Column(Date)
+    ke = Column(Integer)
+    target_ke = Column(Integer)
+
+
 class Operateur(Base):
     __tablename__ = "operateur"
     id_operateur = Column(Integer, primary_key=True)

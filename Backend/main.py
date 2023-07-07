@@ -299,3 +299,66 @@ def updatePlanning(id_planning: int, date_planning: date, id_operateur: int, id_
 def deletePlanning(id_planning: int, force: bool = False, session: Session = Depends(get_session)):
     planning = handlers.PlanningHandler(session=session, model=models.Planning)
     return planning.delete(id_planning)
+
+
+# ROUTING FOR SETTINGS [ke] ---------------------------------------------------
+@app.post("/setting/ke", response_model=schemas.Ke, status_code=status.HTTP_201_CREATED)
+def createKe(ke: schemas.KeCreate, session: Session = Depends(get_session)):
+    newKe = handlers.KeHandler(session=session, model=models.Ke)
+    return newKe.create(ke)
+
+
+@app.get("/setting/ke", response_model=List[schemas.Ke], status_code=status.HTTP_200_OK)
+def readAllKe(session: Session = Depends(get_session)):
+    allKe = handlers.KeHandler(session=session, model=models.Ke)
+    return allKe.readAll()
+
+
+@app.get("/setting/ke/{id_ke}", response_model=schemas.Ke, status_code=status.HTTP_200_OK)
+def readKe(id_ke: int, session: Session = Depends(get_session)):
+    ke = handlers.KeHandler(session=session, model=models.Ke)
+    return ke.read(id=id_ke)
+
+
+# @app.put("/setting/ke/{id_ke}", response_model=schemas.Ke)
+# def updateShift(id_ke: int, date_ke: date, ke: int, target_ke: int, session: Session = Depends(get_session)):
+#     ke = handlers.KeHandler(session=session, model=models.Ke)
+#     return ke.update(id_ke=id_ke, date_ke=date_ke, ke=ke, target_ke=target_ke)
+
+
+@app.delete("/setting/ke/{id_ke}", response_model=schemas.Ke, status_code=status.HTTP_200_OK)
+def deleteKe(id: int, force: bool = False, session: Session = Depends(get_session)):
+    ke = handlers.KeHandler(session=session, model=models.Ke)
+    return ke.delete(id)
+
+# ROUTING FOR SETTINGS [qty] ---------------------------------------------------
+
+
+@app.post("/setting/qty", response_model=schemas.Qty, status_code=status.HTTP_201_CREATED)
+def createQty(Qty: schemas.QtyCreate, session: Session = Depends(get_session)):
+    newQty = handlers.QtyHandler(session=session, model=models.Qty)
+    return newQty.create(Qty)
+
+
+@app.get("/setting/qty", response_model=List[schemas.Qty], status_code=status.HTTP_200_OK)
+def readAllQty(session: Session = Depends(get_session)):
+    allQty = handlers.QtyHandler(session=session, model=models.Qty)
+    return allQty.readAll()
+
+
+@app.get("/setting/qty/{id_qty}", response_model=schemas.Qty, status_code=status.HTTP_200_OK)
+def readQty(id_qty: int, session: Session = Depends(get_session)):
+    Qty = handlers.QtyHandler(session=session, model=models.Qty)
+    return Qty.read(id=id_qty)
+
+
+# @app.put("/setting/qty/{id_qty}", response_model=schemas.Qty)
+# def updateShift(id_qty: int, date: date, Qty: int, target_qty: int, session: Session = Depends(get_session)):
+#     Qty = handlers.QtyHandler(session=session, model=models.Qty)
+#     return Qty.update(id_qty=id_qty, date=date, qty=Qty, target_qty=target_qty)
+
+
+@app.delete("/setting/qty/{id_qty}", response_model=schemas.Qty, status_code=status.HTTP_200_OK)
+def deleteQty(id_qty: int, force: bool = False, session: Session = Depends(get_session)):
+    Qty = handlers.QtyHandler(session=session, model=models.Qty)
+    return Qty.delete(id_qty)

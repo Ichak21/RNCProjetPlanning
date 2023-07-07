@@ -5,7 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 # Create a sqlite engine instance
-engine = create_engine("sqlite:///databaseV0.sqlite")
+engine = create_engine("sqlite:///databaseV2.sqlite")
 
 
 @event.listens_for(Engine, "connect")
