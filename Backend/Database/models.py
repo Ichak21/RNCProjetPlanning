@@ -56,7 +56,7 @@ class Ke(Base):
 class Operateur(Base):
     __tablename__ = "operateur"
     id_operateur = Column(Integer, primary_key=True)
-    id_card = Column(Integer, nullable=False)
+    id_card = Column(String, nullable=False)
     name_operateur = Column(String(70), nullable=False)
     id_shift = Column(Integer, ForeignKey("shift.id_shift"), nullable=False)
     home_station = Column(Integer, ForeignKey(

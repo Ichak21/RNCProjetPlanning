@@ -1,0 +1,72 @@
+id_station;name_station;capa_max;id_secteur
+1;330 Contrôle adaptation;2;3
+2;302 D2S;3;3
+3;340 Ligne DET;3;3
+4;320 DEMT Affaires SP;2;3
+5;310 Cablage caissons;5;3
+6;514 Filerie;3;4
+7;514 Moteurs;5;4
+8;516C Composant Indus;3;5
+9;800C IQE;3;5
+10;850D Dechargement Camions;3;5
+11;510D;3;5
+12;850A Reception Magasin;3;5
+13;850B Livraison BDL Train 1;3;5
+14;500 Robot Assemblage;3;1
+15;505Controle etancheité Helium;2;1
+16;502 Montage Interne;5;1
+17;501 Salle Propre;5;1
+18;504 CMI;1;1
+19;503 Commandes I/P;3;1
+20;504 Robot de Fermeture;2;1
+21;503 Commandes Q/D;3;1
+22;507Controle HT;2;2
+23;510 Emballage;2;2
+24;508 EQF4;3;2
+25;507 Préhenseur Habillage;3;2
+26;508 EQF2;7;2
+27;506 FIC;5;2
+28;508 EQF1;2;2
+29;509 Controle BT1;1;2
+30;509 Contrôle BT2;1;2
+31;509 Controle Final;1;2
+32;508 EQF3;4;2
+33;505 Passivation;2;1
+34;301 NKT;5;3
+35;Safety;100;6
+36;SPS & Lean;100;6
+37;SIM;100;6
+38;Ergonomics;100;6
+39;Manipulation des Robots;100;6
+40;Programmation trajectoire & recalage;100;6
+41;Soudure TIG;100;6
+42;Soudure MIG;100;6
+43;CACES 1;100;6
+44;CACES 2;100;6
+45;CACES 3;100;6
+46;CACES 4;100;6
+47;CACES 5;100;6
+48;CACES NACELLE;100;6
+49;Transpalette electrique;100;6
+50;Chariot motorise;100;6
+51;Manipulation de SF6;100;6
+52;Secouriste;100;6
+53;Pompiers;100;6
+54;Habilitation elec;100;6
+55;Habillitation ATEX;100;6
+56;Informatique Production;100;6
+57;Informatique Magasin;100;6
+58;Informatique Maintenance;100;6
+59;Informatique IQE;100;6
+60;Informatique Qualite;100;6
+61;Informatique Lancement;100;6
+62;Local réparation;100;6
+63;Safety Leader;100;6
+64;Referent AIC;100;6
+65;Leader 5S;100;6
+66;AZ;100;6
+67;XX_MALADIE;100;2
+68;XX_DELEGATION;100;2
+69;XX_CONGES;100;2
+70;XX_FORMATION_EXT;100;2
+71;XX_PRET;100;2

@@ -48,7 +48,7 @@ class KeCreate(BaseModel):
 
 
 class Ke(KeCreate):
-    id_ke:int
+    id_ke: int
     date_ke: date
     ke: int
     target_ke: int
@@ -64,7 +64,7 @@ class QtyCreate(BaseModel):
 
 
 class Qty(QtyCreate):
-    id_qty:int
+    id_qty: int
     date_qty: date
     qty: int
     target_qty: int
@@ -94,7 +94,7 @@ class User(UserCreate):
 
 
 class OperateurCreate(BaseModel):
-    id_card: int
+    id_card: str
     name_operateur: str
     id_shift: int
     home_station: int
@@ -106,7 +106,7 @@ class OperateurCreate(BaseModel):
 
 class Operateur(OperateurCreate):
     id_operateur: int
-    id_card: int
+    id_card: str
     name_operateur: str
     id_shift: int
     home_station: int
