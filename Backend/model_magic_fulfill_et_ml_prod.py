@@ -36,18 +36,18 @@ liste_operateurs = pd.read_csv('./dataframes/liste_presents_semaine.csv',sep=';'
 liste_operateurs = liste_operateurs['Operator Name'].values
 personne_niveau = pd.read_csv('./dataframes/personne_niveau_secteur2_new.csv', sep=';')
 
-#pour le moment, on simule la colonne SST pas encore dans personne_niveau
-SST_positions = []
-for i in range (len(personne_niveau)):
-    SST_positions.append(np.random.randint(3))
-for i in range(len(SST_positions)):
-    if SST_positions[i] == 0 or SST_positions[i] == 2:
-        SST_positions[i] = False
-    else:
-        SST_positions[i] = True
-personne_niveau['SST'] = SST_positions
-personne_niveau.loc[personne_niveau['SST'] == 1, 'SST'] = True
-#########
+# #pour le moment, on simule la colonne SST pas encore dans personne_niveau
+# SST_positions = []
+# for i in range (len(personne_niveau)):
+#     SST_positions.append(np.random.randint(3))
+# for i in range(len(SST_positions)):
+#     if SST_positions[i] == 0 or SST_positions[i] == 2:
+#         SST_positions[i] = False
+#     else:
+#         SST_positions[i] = True
+# personne_niveau['SST'] = SST_positions
+# personne_niveau.loc[personne_niveau['SST'] == 1, 'SST'] = True
+# #########
 
 
 def model(quantite_a_produire:int = 0):
