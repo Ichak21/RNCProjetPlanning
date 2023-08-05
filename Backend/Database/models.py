@@ -29,8 +29,7 @@ class Shift(Base):
 
 class User(Base):
     __tablename__ = "user"
-    id_user = Column(Integer, primary_key=True)
-    id_card = Column(String(12))
+    id_user = Column(String, primary_key=True)  # id_card
     login = Column(String(20), nullable=False)
     password = Column(String(20), nullable=False)
     start_date = Column(Date, nullable=False)
@@ -55,8 +54,8 @@ class Ke(Base):
 
 class Operateur(Base):
     __tablename__ = "operateur"
-    id_operateur = Column(Integer, primary_key=True)
-    id_card = Column(String, nullable=False)
+    # id_operateur = Column(Integer, primary_key=True)
+    id_operateur = Column(String, primary_key=True)  # id_card
     name_operateur = Column(String(70), nullable=False)
     id_shift = Column(Integer, ForeignKey("shift.id_shift"), nullable=False)
     home_station = Column(Integer, ForeignKey(

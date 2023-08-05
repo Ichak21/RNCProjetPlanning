@@ -74,7 +74,7 @@ class Qty(QtyCreate):
 
 
 class UserCreate(BaseModel):
-    id_card: str
+    id_user: str
     login: str
     password: str
     start_date: date
@@ -82,8 +82,7 @@ class UserCreate(BaseModel):
 
 
 class User(UserCreate):
-    id_user: int
-    id_card: str
+    id_user: str
     login: str
     password: str
     start_date: date
@@ -94,7 +93,7 @@ class User(UserCreate):
 
 
 class OperateurCreate(BaseModel):
-    id_card: str
+    id_operateur: str
     name_operateur: str
     id_shift: int
     home_station: int
@@ -105,8 +104,8 @@ class OperateurCreate(BaseModel):
 
 
 class Operateur(OperateurCreate):
-    id_operateur: int
-    id_card: str
+    # id_operateur: int
+    id_operateur: str
     name_operateur: str
     id_shift: int
     home_station: int
