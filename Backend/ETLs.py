@@ -8,11 +8,11 @@ from datetime import date
 import pandas as pd
 from pandas import DataFrame
 
-# * update operateur
+# * update operateur (sur l id card)
 # * delete n reload competence
 # * delete n reload softcompetence
-# * add ke
-# * add qty
+# * add ke (date)
+# * add qty (date)
 
 
 class ETL_Loading:
