@@ -24,7 +24,7 @@ class Shift(Base):
     __tablename__ = "shift"
     id_shift = Column(Integer, primary_key=True)
     name_shift = Column(String(20), nullable=False)
-    id_user = Column(Integer, ForeignKey("user.id_user"), nullable=False)
+    id_user = Column(String, ForeignKey("user.id_user"), nullable=False)
 
 
 class User(Base):
@@ -74,7 +74,7 @@ class Competence(Base):
         "station.id_station"), nullable=False)
     level_competence = Column(Integer, nullable=False)
     last_assesement = Column(Date, nullable=False)
-    id_operateur = Column(Integer, ForeignKey(
+    id_operateur = Column(String, ForeignKey(
         "operateur.id_operateur"), nullable=False)
 
 
@@ -85,7 +85,7 @@ class SoftCompetence(Base):
         "station.id_station"), nullable=False)
     level_competence = Column(Integer, nullable=False)
     last_assesement = Column(Date, nullable=False)
-    id_operateur = Column(Integer, ForeignKey(
+    id_operateur = Column(String, ForeignKey(
         "operateur.id_operateur"), nullable=False)
 
 
@@ -93,7 +93,7 @@ class SoftCompetence(Base):
 class Planning(Base):
     __tablename__ = "planning"
     id = Column(Integer, primary_key=True)
-    id_operateur = Column(Integer, ForeignKey(
+    id_operateur = Column(String, ForeignKey(
         "operateur.id_operateur"), nullable=False)
     id_user = Column(Integer, ForeignKey("user.id_user"), nullable=False)
     id_shift = Column(Integer, ForeignKey("shift.id_shift"), nullable=False)
