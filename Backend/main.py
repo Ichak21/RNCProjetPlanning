@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 import Database.models as models
 import Database.schemas as schemas
 import Database.handlers as handlers
+import ETLs as ETL
 from datetime import date
 
 # Create the database
@@ -362,3 +363,22 @@ def readQty(id_qty: int, session: Session = Depends(get_session)):
 def deleteQty(id_qty: int, force: bool = False, session: Session = Depends(get_session)):
     Qty = handlers.QtyHandler(session=session, model=models.Qty)
     return Qty.delete(id_qty)
+
+
+@app.get("/setting/init", response_model=None, status_code=status.HTTP_200_OK)
+def initiDB(session: Session = Depends(get_session)):
+    initialisation = ETL.ETL_Loading_Init(session=session)
+    initialisation.extract()
+    initialisation.load()
+
+
+@app.get("/setting/update", response_model=None, status_code=status.HTTP_200_OK)
+def initiDB(session: Session = Depends(get_session)):
+    update = ETL.ETL_Loading_Update(session=session)
+    update.extract()
+    newKeValue = schemas.Ke(id_ke=200,
+                            date_ke=str('23/08/2023'), ke=55, target_ke=55)
+    keHandler = handlers.KeHandler(session=session, model=models.Ke)
+    keHandler.create(newKeValue)
+    # update.transform_ke()
+    # update.load()

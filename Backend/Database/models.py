@@ -32,22 +32,22 @@ class User(Base):
     id_user = Column(String, primary_key=True)  # id_card
     login = Column(String(20), nullable=False)
     password = Column(String(20), nullable=False)
-    start_date = Column(Date, nullable=False)
-    end_date = Column(Date)
+    start_date = Column(String, nullable=False)
+    end_date = Column(String)
 
 
 class Qty(Base):
     __tablename__ = "qty"
     id_qty = Column(Integer, primary_key=True)
-    date_qty = Column(Date)
+    date_qty = Column(String)
     qty = Column(Integer)
     target_qty = Column(Integer)
 
 
 class Ke(Base):
     __tablename__ = "ke"
-    id_ke = Column(Integer, primary_key=True)
-    date_ke = Column(Date)
+    id_ke = Column(Integer, primary_key=True, autoincrement=True)
+    date_ke = Column(String)
     ke = Column(Integer)
     target_ke = Column(Integer)
 
@@ -55,13 +55,13 @@ class Ke(Base):
 class Operateur(Base):
     __tablename__ = "operateur"
     # id_operateur = Column(Integer, primary_key=True)
-    id_operateur = Column(String, primary_key=True)  # id_card
+    id_operateur = Column(String(25), primary_key=True)  # id_card
     name_operateur = Column(String(70), nullable=False)
     id_shift = Column(Integer, ForeignKey("shift.id_shift"), nullable=False)
     home_station = Column(Integer, ForeignKey(
         "station.id_station"), nullable=False)
-    start_date = Column(Date, nullable=False)
-    end_date = Column(Date)
+    start_date = Column(String(10), nullable=False)
+    end_date = Column(String(10))
     isTemp = Column(Boolean, nullable=False)
     active_status = Column(Boolean, nullable=False)
 
@@ -73,8 +73,8 @@ class Competence(Base):
     id_station = Column(Integer, ForeignKey(
         "station.id_station"), nullable=False)
     level_competence = Column(Integer, nullable=False)
-    last_assesement = Column(Date, nullable=False)
-    id_operateur = Column(String, ForeignKey(
+    last_assesement = Column(String, nullable=False)
+    id_operateur = Column(String(25), ForeignKey(
         "operateur.id_operateur"), nullable=False)
 
 
@@ -84,7 +84,7 @@ class SoftCompetence(Base):
     id_station = Column(Integer, ForeignKey(
         "station.id_station"), nullable=False)
     level_competence = Column(Integer, nullable=False)
-    last_assesement = Column(Date, nullable=False)
+    last_assesement = Column(String, nullable=False)
     id_operateur = Column(String, ForeignKey(
         "operateur.id_operateur"), nullable=False)
 
@@ -99,6 +99,6 @@ class Planning(Base):
     id_shift = Column(Integer, ForeignKey("shift.id_shift"), nullable=False)
     id_station = Column(Integer, ForeignKey(
         "station.id_station"), nullable=False)
-    date = Column(Date, nullable=False)
+    date = Column(String, nullable=False)
     week = Column(Integer, nullable=False)
     day = Column(Integer, nullable=False)

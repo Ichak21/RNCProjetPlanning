@@ -42,14 +42,14 @@ class Shift(ShiftCreate):
 
 
 class KeCreate(BaseModel):
-    date_ke: date
+    date_ke: str
     ke: int
     target_ke: int
 
 
 class Ke(KeCreate):
     id_ke: int
-    date_ke: date
+    date_ke: str
     ke: int
     target_ke: int
 
@@ -58,14 +58,14 @@ class Ke(KeCreate):
 
 
 class QtyCreate(BaseModel):
-    date_qty: date
+    date_qty: str
     qty: str
     target_qty: int
 
 
 class Qty(QtyCreate):
     id_qty: int
-    date_qty: date
+    date_qty: str
     qty: int
     target_qty: int
 
@@ -77,16 +77,16 @@ class UserCreate(BaseModel):
     id_user: str
     login: str
     password: str
-    start_date: date
-    end_date: date
+    start_date: str
+    end_date: str
 
 
 class User(UserCreate):
     id_user: str
     login: str
     password: str
-    start_date: date
-    end_date: date
+    start_date: str
+    end_date: str
 
     class Config:
         orm_mode = True
@@ -97,8 +97,8 @@ class OperateurCreate(BaseModel):
     name_operateur: str
     id_shift: int
     home_station: int
-    start_date: date
-    end_date: date
+    start_date: str
+    end_date: str
     isTemp: bool
     active_status: bool
 
@@ -109,8 +109,8 @@ class Operateur(OperateurCreate):
     name_operateur: str
     id_shift: int
     home_station: int
-    start_date: date
-    end_date: date
+    start_date: str
+    end_date: str
     isTemp: bool
     active_status: bool
 
@@ -121,16 +121,16 @@ class Operateur(OperateurCreate):
 class CompetenceCreate(BaseModel):
     id_station: int
     level_competence: int
-    last_assesement: date
-    id_operateur: int
+    last_assesement: str
+    id_operateur: str
 
 
 class Competence(CompetenceCreate):
     id: int
     id_station: int
     level_competence: int
-    last_assesement: date
-    id_operateur: int
+    last_assesement: str
+    id_operateur: str
 
     class Config:
         orm_mode = True
@@ -139,38 +139,38 @@ class Competence(CompetenceCreate):
 class SoftCompetenceCreate(BaseModel):
     id_station: int
     level_competence: int
-    last_assesement: date
-    id_operateur: int
+    last_assesement: str
+    id_operateur: str
 
 
 class SoftCompetence(SoftCompetenceCreate):
     id: int
     id_station: int
     level_competence: int
-    last_assesement: date
-    id_operateur: int
+    last_assesement: str
+    id_operateur: str
 
     class Config:
         orm_mode = True
 
 
 class PlanningCreate(BaseModel):
-    id_operateur: int
+    id_operateur: str
     id_user: int
     id_shift: int
     id_station: int
-    date: date
+    date: str
     week: int
     day: int
 
 
 class Planning(PlanningCreate):
     id: int
-    id_operateur: int
+    id_operateur: str
     id_user: int
     id_shift: int
     id_station: int
-    date: date
+    date: str
     week: int
     day: int
 
