@@ -34,6 +34,7 @@ def root():
 
 @app.post("/setting/secteur", response_model=schemas.Secteur, status_code=status.HTTP_201_CREATED)
 def createSecteur(secteur: schemas.SecteurCreate, session: Session = Depends(get_session)):
+    print(secteur)
     newSecteur = handlers.SecteurHandler(session=session, model=models.Secteur)
     return newSecteur.create(secteur)
 
@@ -106,6 +107,9 @@ def createSoftCompetence(softcompetence: schemas.SoftCompetenceCreate, session: 
 def readAllSoftCompetence(session: Session = Depends(get_session)):
     allSoftCompetence = handlers.SoftCompetenceHandler(
         session=session, model=models.SoftCompetence)
+    # for competence in allSoftCompetence.readAll():
+    #     print(competence.id_operateur)
+    # return []
     return allSoftCompetence.readAll()
 
 
@@ -210,6 +214,13 @@ def readAllOperateurs(session: Session = Depends(get_session)):
     return allOperateurs.readAll()
 
 
+@app.get("/operateurs", response_model=List[schemas.Operateur], status_code=status.HTTP_200_OK)
+def readAllOperateursTrained(session: Session = Depends(get_session)):
+    allOperateurs = handlers.OperateurHandler(
+        session=session, model=models.Operateur)
+    return allOperateurs.readAllTrained()
+
+
 @app.get("/setting/operateur/{id_operateur}", response_model=schemas.Operateur, status_code=status.HTTP_200_OK)
 def readOperateur(id_operateur: int, session: Session = Depends(get_session)):
     operateur = handlers.OperateurHandler(
@@ -302,7 +313,21 @@ def deletePlanning(id_planning: int, force: bool = False, session: Session = Dep
     return planning.delete(id_planning)
 
 
+@app.get("/planning", response_model=List[schemas.PlanningDisplay], status_code=status.HTTP_200_OK)
+def readAllPlannings(session: Session = Depends(get_session)):
+    allPlannings = handlers.PlanningHandler(
+        session=session, model=models.Planning)
+    return allPlannings.readAllDisplay()
+
+
+@app.get("/planning/{week}", response_model=List[schemas.Planning], status_code=status.HTTP_200_OK)
+def readPlanningWeek(week_planning: str, session: Session = Depends(get_session)):
+    planning = handlers.PlanningHandler(session=session, model=models.Planning)
+    return planning.readWeek(week=week_planning)
+
 # ROUTING FOR SETTINGS [ke] ---------------------------------------------------
+
+
 @app.post("/setting/ke", response_model=schemas.Ke, status_code=status.HTTP_201_CREATED)
 def createKe(ke: schemas.KeCreate, session: Session = Depends(get_session)):
     newKe = handlers.KeHandler(session=session, model=models.Ke)
@@ -370,6 +395,12 @@ def initiDB(session: Session = Depends(get_session)):
     initialisation = ETL.ETL_Loading_Init(session=session)
     initialisation.extract()
     initialisation.load()
+
+
+@app.get("/setting/del", response_model=None, status_code=status.HTTP_200_OK)
+def initiDB(session: Session = Depends(get_session)):
+    initialisation = ETL.ETL_Loading_Init(session=session)
+    initialisation.dropAll()
 
 
 @app.get("/setting/update", response_model=None, status_code=status.HTTP_200_OK)

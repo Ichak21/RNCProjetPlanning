@@ -20,7 +20,7 @@ class Handler:
         # Ajouter une nouvelle entrée dans la table de base
         self.session.add(model_loaded)
         self.session.commit()
-        self.session.refresh(model_loaded)
+        # self.session.refresh(model_loaded)
         return model_loaded
 
     def readAll(self):
@@ -225,6 +225,21 @@ class OperateurHandler(Handler):
         )
         return super().create(new_operateur)
 
+    def readAllTrained(self):
+        # Obtenir toutes les entrées de la table
+        listItem = self.session.query(models.Competence).all()
+        listPeople = []
+        for competence in listItem:
+            for people in listPeople:
+                if competence.id_operateur == people.id_operateur:
+                    break
+            else:
+                operateur = self.session.query(
+                    models.Operateur).get(competence.id_operateur)
+                listPeople.append(operateur)
+
+        return listPeople
+
     def update(self, id_operateur: int, id_card: int, name_operateur: str, id_shift: int, home_station: int,
                start_date: date, end_date: date, isTemp: bool, active_status: bool):
         operateur = self.session.query(self.model).get(id_operateur)
@@ -317,6 +332,40 @@ class PlanningHandler(Handler):
         )
         return super().create(new_planning)
 
+    def readWeek(self, week: str):
+        planning = self.session.query(self.model).filter(
+            self.model.week == week).all()
+        return planning
+
+    def readAllDisplay(self):
+        # Obtenir toutes les entrées de la table
+        listOut = []
+        listItem = self.session.query(self.model).all()
+        for planningline in listItem:
+            user = self.session.query(models.User).get(
+                planningline.id_user).login
+            operateur = self.session.query(models.Operateur).get(
+                planningline.id_operateur).name_operateur
+            shift = self.session.query(models.Shift).get(
+                planningline.id_shift).name_shift
+            station = self.session.query(models.Station).get(
+                planningline.id_station).name_station
+            date = planningline.date
+            week = planningline.week
+            day = planningline.day
+            convt_planning = schemas.PlanningDisplay(
+                id=planningline.id,
+                id_operateur=operateur,
+                id_user=user,
+                id_shift=shift,
+                id_station=station,
+                date=date,
+                week=week,
+                day=day
+            )
+            listOut.append(convt_planning)
+        return listOut
+
     def update(self, id_planning: int, id_operateur: int, id_user: int, id_shift: int, id_station: int, date: date,
                week: int, day: int):
         planning = self.session.query(self.model).get(id_planning)
@@ -337,3 +386,9 @@ class PlanningHandler(Handler):
                 detail=f"L'élément du planning avec l'ID {id_planning} n'a pas été trouvé")
 
         return planning
+
+
+class InitHandler(Handler):
+    def create(self, init: schemas.InitCreate):
+        newInit = self.model(old_name=init.old_name, new_name=init.new_name)
+        return super().create(newInit)

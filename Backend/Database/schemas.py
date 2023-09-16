@@ -160,8 +160,8 @@ class PlanningCreate(BaseModel):
     id_shift: int
     id_station: int
     date: str
-    week: int
-    day: int
+    week: str
+    day: str
 
 
 class Planning(PlanningCreate):
@@ -171,8 +171,36 @@ class Planning(PlanningCreate):
     id_shift: int
     id_station: int
     date: str
-    week: int
-    day: int
+    week: str
+    day: str
+
+    class Config:
+        orm_mode = True
+
+
+class PlanningDisplay(BaseModel):
+    id: int
+    id_operateur: str
+    id_user: str
+    id_shift: str
+    id_station: str
+    date: str
+    week: str
+    day: str
+
+    class Config:
+        orm_mode = True
+
+
+class InitCreate(BaseModel):
+    old_name: str
+    new_name: str
+
+
+class Init(InitCreate):
+    id: int
+    old_name: str
+    new_name: str
 
     class Config:
         orm_mode = True

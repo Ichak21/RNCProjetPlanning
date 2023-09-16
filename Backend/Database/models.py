@@ -89,6 +89,13 @@ class SoftCompetence(Base):
         "operateur.id_operateur"), nullable=False)
 
 
+class Init(Base):
+    __tablename__ = "translationTable"
+    id = Column(Integer, primary_key=True)
+    old_name = Column(String, nullable=False)
+    new_name = Column(String, nullable=False)
+
+
 # Table de fait
 class Planning(Base):
     __tablename__ = "planning"
@@ -100,5 +107,5 @@ class Planning(Base):
     id_station = Column(Integer, ForeignKey(
         "station.id_station"), nullable=False)
     date = Column(String, nullable=False)
-    week = Column(Integer, nullable=False)
-    day = Column(Integer, nullable=False)
+    week = Column(String, nullable=False)
+    day = Column(String, nullable=False)

@@ -66,6 +66,21 @@ class ETL_Loading_Init(ETL):
     df_ke: DataFrame
     df_qty: DataFrame
 
+    def _update_secteur(self, secteur_input: schemas.SecteurCreate):
+        listItem = self.session.query(models.Secteur).all()
+        for line in self.df_secteur.iterrows():
+            name = str(line[1][1])
+            secteur_input.name_secteur = name
+            for secteur in listItem:
+                if secteur.name_secteur == secteur_input.name_secteur:
+                    print(f"(-) Secteur ignorer - {str(line[1][1])}")
+                    break
+            else:
+                secteurHandler = handlers.SecteurHandler(
+                    session=self.session, model=models.Secteur)
+                secteurHandler.create(secteur_input)
+                print(f"(+) Secteur ajouter - {str(line[1][1])}")
+
     def extract(self):
         self.df_secteur = self._read_csv(self.path_secteur)
         self.df_station = self._read_csv(self.path_station)
@@ -79,21 +94,36 @@ class ETL_Loading_Init(ETL):
         self.df_ke = self._read_csv(self.path_ke)
         self.df_qty = self._read_csv(self.path_qty)
 
+    def dropAll(self):
+        self.session.query(models.Qty).delete()
+        self.session.query(models.Ke).delete()
+        self.session.query(models.Planning).delete()
+        self.session.query(models.SoftCompetence).delete()
+        self.session.query(models.Competence).delete()
+        self.session.query(models.Shift).delete()
+        self.session.query(models.User).delete()
+        self.session.query(models.Operateur).delete()
+        self.session.query(models.Init).delete()
+        self.session.query(models.Station).delete()
+        self.session.query(models.Secteur).delete()
+        self.session.commit()
+
     def transform(self):
         pass
 
     def load(self):
-        self._put_sql("secteur", self.df_secteur, engine)
-        self._put_sql("station", self.df_station, engine)
-        self._put_sql("init", self.df_translat_station, engine)
-        self._put_sql("operateur", self.df_operateur, engine)
-        self._put_sql("user", self.df_user, engine)
-        self._put_sql("shift", self.df_shift, engine)
-        self._put_sql("competence", self.df_competence, engine)
-        self._put_sql("softcompetence", self.df_softcompetence, engine)
-        self._put_sql("planning", self.df_planning, engine)
-        self._put_sql("ke", self.df_ke, engine)
-        self._put_sql("qty", self.df_qty, engine)
+        self._update_secteur(secteur_input=schemas.SecteurCreate)
+        # self._put_sql("secteur", self.df_secteur, engine)
+        # self._put_sql("station", self.df_station, engine)
+        # self._put_sql("init", self.df_translat_station, engine)
+        # self._put_sql("operateur", self.df_operateur, engine)
+        # self._put_sql("user", self.df_user, engine)
+        # self._put_sql("shift", self.df_shift, engine)
+        # self._put_sql("competence", self.df_competence, engine)
+        # self._put_sql("softcompetence", self.df_softcompetence, engine)
+        # self._put_sql("planning", self.df_planning, engine)
+        # self._put_sql("ke", self.df_ke, engine)
+        # self._put_sql("qty", self.df_qty, engine)
 
 
 class ETL_Loading_Update(ETL):
