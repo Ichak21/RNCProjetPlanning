@@ -70,3 +70,38 @@ id_station;name_station;capa_max;id_secteur
 69;XX_CONGES;100;2
 70;XX_FORMATION_EXT;100;2
 71;XX_PRET;100;2
+;505Controle etancheité Helium;2;1
+;500 Robot Assemblage;3;1
+;502 Montage Interne;5;1
+;508 EQF2;7;2
+;505 Passivation;2;1
+;501 Salle Propre;5;1
+;Sous ensemble;3;1
+;503 Commandes Q/D;2;1
+;Emballage Kitting;2;1
+;508 EQF1;3;2
+;506 FIC;5;2
+;850D Dechargement Camions;1;5
+;507 Préhenseur Habillage;3;2
+;507Controle HT;2;2
+;503 Commandes I/P;3;1
+;509 Controle Final;1;2
+;Expedition;1;5
+;508 EQF4;4;2
+;514 Filerie;3;1
+;850A Reception Magasin;1;5
+;508 EQF3;4;2
+;510 Emballage;2;2
+;504 CMI;1;1
+;504 Robot de Fermeture;2;1
+;850C Réappro PAL PAL;3;5
+;850B Livraison BDL Train 1;1;5
+;301 NKT;4;3
+;310 Cablage caissons;7;3
+;302 D2S;2;3
+;340 Ligne DET;3;3
+;330 Contrôle adaptation;3;3
+;800C IQE;3;6
+;516C Composant Indus;1;1
+;510D;2;1
+;514 Moteurs;4;1

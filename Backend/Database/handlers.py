@@ -145,19 +145,19 @@ class KeHandler(Handler):
         return super().create(newKe)
 
     def update(self, id_ke: int, date_ke: date, ke: int, target_ke: int):
-        ke = self.session.query(self.model).get(id_ke)
+        ke_seek = self.session.query(self.model).get(id_ke)
 
-        if ke:
-            ke.date_ke = date_ke
-            ke.ke = ke
-            ke.target_ke = target_ke
+        if ke_seek:
+            ke_seek.date_ke = date_ke
+            ke_seek.ke = ke
+            ke_seek.target_ke = target_ke
             self.session.commit()
 
-        if not ke:
+        if not ke_seek:
             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail=f"L'élément du ke avec l'ID {dateke} n'a pas été trouvé")
+                status_code=status.HTTP_404_NOT_FOUND, detail=f"L'élément du ke avec l'ID {date_ke} n'a pas été trouvé")
 
-        return ke
+        return ke_seek
 
 
 class QtyHandler(Handler):

@@ -332,14 +332,15 @@ class ETL_Loading_Init(ETL):
         self.df_qty = self._read_csv(self.path_qty)
 
     def dropAll(self):
+        print("=======> DROP ALL TABLE)")
         self.session.query(models.Qty).delete()
         self.session.query(models.Ke).delete()
         self.session.query(models.Planning).delete()
         self.session.query(models.SoftCompetence).delete()
         self.session.query(models.Competence).delete()
+        self.session.query(models.Operateur).delete()
         self.session.query(models.Shift).delete()
         self.session.query(models.User).delete()
-        self.session.query(models.Operateur).delete()
         self.session.query(models.Init).delete()
         self.session.query(models.Station).delete()
         self.session.query(models.Secteur).delete()
@@ -360,84 +361,311 @@ class ETL_Loading_Init(ETL):
         self._update_planning(planning_input=schemas.PlanningCreate)
 
 
-# class ETL_Loading_Update(ETL):
-#     session: Session
-#     path_KE = '../DataLastWeek/Load/KPI_KE.csv'  # Delete 2 first lines
-#     path_QTY = '../DataLastWeek/Load/KPI_QTY.csv'  # Delete 2 first lines
-#     # Convertir en csv (;)
-#     path_OPERATEUR = '../DataLastWeek/Load/Setup_Operators.csv'
-#     # Convertir en csv (;)
-#     path_GENERALSKILLS = '../DataLastWeek/Load/Setup_VERSATILITYOperatorsGeneralSkills.csv'
-#     # Convertir en csv (;)
-#     path_SKILLS = '../DataLastWeek/Load/Setup_VERSATILITYOperatorsSkills.csv'
+class ETL_Loading_Update(ETL):
+    session: Session
+    path_KE = '../DataLastWeek/Load/KPI_KE.csv'  # Delete 2 first lines
+    path_QTY = '../DataLastWeek/Load/KPI_QTY.csv'  # Delete 2 first lines
+    # Convertir en csv (;)
+    path_OPERATEUR = '../DataLastWeek/Load/Setup_Operators.csv'
+    # Convertir en csv (;)
+    path_GENERALSKILLS = '../DataLastWeek/Load/Setup_VERSATILITYOperatorsGeneralSkills.csv'
+    # Convertir en csv (;)
+    path_SKILLS = '../DataLastWeek/Load/Setup_VERSATILITYOperatorsSkills.csv'
 
-#     df_KE: DataFrame
-#     df_QTY: DataFrame
-#     df_OPERATEUR: DataFrame
-#     df_GENERALSKILLS: DataFrame
-#     df_SKILLS: DataFrame
+    df_KE: DataFrame
+    df_QTY: DataFrame
+    df_OPERATEUR: DataFrame
+    df_GENERALSKILLS: DataFrame
+    df_SKILLS: DataFrame
 
-#     df_INPUT_KE: DataFrame
-#     df_INPUT_QTY: DataFrame
-#     df_INPUT_OPERATEUR: DataFrame
-#     df_INPUT_GENERALSKILLS: DataFrame
-#     df_INPUT_SKILLS: DataFrame
+    df_INPUT_KE: DataFrame
+    df_INPUT_QTY: DataFrame
+    df_INPUT_OPERATEUR: DataFrame
+    df_INPUT_GENERALSKILLS: DataFrame
+    df_INPUT_SKILLS: DataFrame
 
-#     def _if_date_exist_in_base(self, date_x: str, table_x: models, attribut_x: models):
-#         if_exist = self.session.query(table_x).filter(
-#             attribut_x == date_x).first()
-#         if if_exist == None:
-#             return False
-#         else:
-#             return True
+    def _cast_date(self, date_x: str):
+        mois_dict = {
+            'Jan': '01',
+            'Feb': '02',
+            'Mar': '03',
+            'Apr': '04',
+            'May': '05',
+            'Jun': '06',
+            'Jul': '07',
+            'Aug': '08',
+            'Sep': '09',
+            'Oct': '10',
+            'Nov': '11',
+            'Dec': '12'
+        }
 
-#     def _cast_date(self, date_x: str):
-#         try:
-#             date_x = datetime.strptime(date_x, '%d %b %Y')
-#         except:
-#             date_x = datetime.strptime(date_x, '%d/%m/%Y')
+        if date_x[2] == '/':
+            dateCasted = date_x
+        else:
+            dateCasted = date_x[0:2]+"/" + \
+                mois_dict[date_x[3:6]]+"/"+date_x[7:11]
 
-#         return str(date_x.strftime('%d/%m/%Y'))
+        # dateCasted = datetime.strptime(dateCasted, '%d/%m/%Y')
+        return dateCasted
 
-#     def extract(self):
-#         self.df_KE = self._read_csv(self.path_KE)
-#         self.df_QTY = self._read_csv(self.path_QTY)
-#         self.df_OPERATEUR = self._read_csv(self.path_OPERATEUR)
-#         self.df_GENERALSKILLS = self._read_csv(self.path_GENERALSKILLS)
-#         self.df_SKILLS = self._read_csv(self.path_SKILLS)
+    def extract(self):
+        self.df_KE = self._read_csv(self.path_KE)
+        self.df_QTY = self._read_csv(self.path_QTY)
+        self.df_OPERATEUR = self._read_csv(self.path_OPERATEUR)
+        self.df_GENERALSKILLS = self._read_csv(self.path_GENERALSKILLS)
+        self.df_SKILLS = self._read_csv(self.path_SKILLS)
 
-#     def transform_ke(self):
-#         for line in self.df_KE.iterrows():
-#             line_date = self._cast_date(str(line[1].Day))
-#             if not(self.session.query(models.Ke).filter(
-#                     models.Ke.date_ke == line_date).first() == None):
-#                 print(f"ignorer- {line_date}")
-#             else:
-#                 try:
-#                     value = int(line[1].Value)
-#                 except:
-#                     value = 0
-#                 try:
-#                     target = int(line[1].Target)
-#                 except:
-#                     target = 0
-#                 if not(target == 0 or value == 0):
-#                     newKeValue = schemas.KeCreate(date_ke=str(
-#                         line_date), ke=value, target_ke=target)
-#                     keHandler = handlers.KeHandler(
-#                         session=self.session, model=models.Ke)
-#                     anwser = keHandler.create(newKeValue)
-#                     print(f"ajouter - {line_date} --{anwser}--")
-#                 print(f"ignorer- {line_date}---------> 0")
-#         self.session.close()
+    def _update_operateur(self, operateur_input: schemas.OperateurCreate):
+        print("    (Mise a jour des OPERATEUR)")
+        listOperateur = self.session.query(models.Operateur).all()
 
-#     def load(self):
-#         pass
+        for operateurCSV in self.df_OPERATEUR.iterrows():
+            operateurCSV_idcard = str(operateurCSV[1][1])
+            operateurCSV_name = str(operateurCSV[1][0])
+            operateurCSV_shift = str(operateurCSV[1][6])
+            operateurCSV_home = str(operateurCSV[1][2])
 
-#         # * update operateur (sur l id card)
+            extract = operateurCSV_home.split('\\')
+            operateurCSV_home = extract[-1]
+            operateurCSV_home = self.session.query(models.Station).filter(
+                models.Station.name_station == operateurCSV_home).first()
+            if not operateurCSV_home == None:
+                operateurCSV_home = operateurCSV_home.id_station
+                operateurCSV_start_date = str(operateurCSV[1][3])
+                operateurCSV_end_date = str(operateurCSV[1][4])
+                operateurCSV_istemps = str(operateurCSV[1][6])
+                operateurCSV_active = "1"
 
-#         # * delete n reload competence
-#         # * delete n reload softcompetence
+                operateur_input.id_operateur = operateurCSV_idcard
+                operateur_input.name_operateur = operateurCSV_name
+                operateur_input.id_shift = operateurCSV_shift
+                operateur_input.home_station = operateurCSV_home
+                operateur_input.start_date = datetime.strptime(
+                    operateurCSV_start_date, '%d/%m/%Y').date()
+                if operateurCSV_end_date == "nan":
+                    operateurCSV_end_date = "01/01/1900"
+                operateur_input.end_date = datetime.strptime(
+                    operateurCSV_end_date, '%d/%m/%Y').date()
+                operateur_input.isTemp = operateurCSV_istemps
+                operateur_input.active_status = operateurCSV_active
 
-#         # * add ke (date)
-#         # * add qty (date)
+                for operateur in listOperateur:
+                    if (operateur.id_operateur) == (operateur_input.id_operateur):
+                        operateurHandler = handlers.OperateurHandler(
+                            session=self.session, model=models.Operateur)
+                        operateurHandler.update(
+                            id_operateur=operateur.id_operateur,
+                            name_operateur=operateur_input.name_operateur,
+                            id_shift=operateur_input.id_shift,
+                            home_station=operateur_input.home_station,
+                            start_date=operateur_input.start_date,
+                            end_date=operateur_input.end_date,
+                            isTemp=operateur_input.isTemp,
+                            active_status=operateur_input.active_status
+                        )
+                        print(f"(%) Operateur updated - {operateurCSV_name}")
+                        break
+                else:
+                    operateurHandler = handlers.OperateurHandler(
+                        session=self.session, model=models.Operateur)
+                    operateurHandler.create(operateur_input)
+                    print(f"(+) Operateur ajouter - {operateurCSV_name}")
+            else:
+                print(f"(?) Station non trouvé - {extract[-1]}")
+
+    def _update_competence(self, competence_input: schemas.CompetenceCreate):
+        print("    (Mise a jour des COMPETENCE)")
+        listCompetences = self.session.query(models.Competence).all()
+
+        for competenceCSV in self.df_SKILLS.iterrows():
+            competenceCSV_idstation = str(competenceCSV[1][0])
+            extract = competenceCSV_idstation.split('\\')
+            competenceCSV_idstation = extract[-2]
+            competenceCSV_idstation = self.session.query(models.Station).filter(
+                models.Station.name_station == competenceCSV_idstation).first()
+
+            if not competenceCSV_idstation == None:
+                competenceCSV_idstation = competenceCSV_idstation.id_station
+                level = 0
+                if competenceCSV[1][2] == 1:
+                    level = 1
+                if competenceCSV[1][5] == 1:
+                    level = 2
+                if competenceCSV[1][8] == 1:
+                    level = 3
+                if competenceCSV[1][11] == 1:
+                    level = 4
+                competenceCSV_level = str(level)
+                competenceCSV_lastass = str(competenceCSV[1][14])
+
+                competenceCSV_id_op = str(competenceCSV[1][1])
+                competenceCSV_id_op = self.session.query(models.Operateur).filter(
+                    models.Operateur.name_operateur == competenceCSV_id_op).first()
+                if not competenceCSV_id_op == None:
+                    competenceCSV_id_op = competenceCSV_id_op.id_operateur
+
+                    competence_input.id_station = competenceCSV_idstation
+                    competence_input.level_competence = competenceCSV_level
+                    competence_input.last_assesement = datetime.strptime(
+                        competenceCSV_lastass, '%d/%m/%Y').date()
+                    competence_input.id_operateur = competenceCSV_id_op
+
+                    for competence in listCompetences:
+                        if (str(competence.id_operateur)+str(competence.id_station)) == (str(competence_input.id_operateur)+str(competence_input.id_station)):
+                            competenceHandler = handlers.CompetenceHandler(
+                                session=self.session, model=models.Competence)
+                            competenceHandler.update(id_competence=competence.id,
+                                                     id_station=competence_input.id_station,
+                                                     level_competence=competence_input.level_competence,
+                                                     last_assesement=competence_input.last_assesement,
+                                                     id_operateur=competence_input.id_operateur)
+                            print(
+                                f"(%) Competence updated - {competenceCSV_id_op} on {competenceCSV_idstation}")
+                            break
+                    else:
+                        competenceHandler = handlers.CompetenceHandler(
+                            session=self.session, model=models.Competence)
+                        competenceHandler.create(competence_input)
+                        print(
+                            f"(+) Competence ajouter - {competenceCSV_id_op} on {competenceCSV_idstation}")
+                else:
+                    print(f"(?) Operateur non trouvé - {competenceCSV[1][1]}")
+            else:
+                print(f"(?) Station non trouvé - {extract[-2]}")
+
+    def _update_softcompetence(self, competence_input: schemas.SoftCompetenceCreate):
+        print("    (Mise a jour des COMPETENCE)")
+        listCompetences = self.session.query(models.SoftCompetence).all()
+
+        for competenceCSV in self.df_GENERALSKILLS.iterrows():
+            competenceCSV_idstation = str(competenceCSV[1][1])
+            competenceCSV_idstation = self.session.query(models.Station).filter(
+                models.Station.name_station == competenceCSV_idstation).first()
+
+            if not competenceCSV_idstation == None:
+                competenceCSV_idstation = competenceCSV_idstation.id_station
+                level = 0
+                if competenceCSV[1][2] == 1:
+                    level = 1
+                competenceCSV_level = str(level)
+                competenceCSV_lastass = str(competenceCSV[1][17])
+
+                competenceCSV_id_op = str(competenceCSV[1][0])
+                competenceCSV_id_op = self.session.query(models.Operateur).filter(
+                    models.Operateur.name_operateur == competenceCSV_id_op).first()
+                if not competenceCSV_id_op == None:
+                    competenceCSV_id_op = competenceCSV_id_op.id_operateur
+
+                    competence_input.id_station = competenceCSV_idstation
+                    competence_input.level_competence = competenceCSV_level
+                    competence_input.last_assesement = datetime.strptime(
+                        competenceCSV_lastass, '%d/%m/%Y').date()
+                    competence_input.id_operateur = competenceCSV_id_op
+
+                    for competence in listCompetences:
+                        if (str(competence.id_operateur)+str(competence.id_station)) == (str(competence_input.id_operateur)+str(competence_input.id_station)):
+                            competenceHandler = handlers.SoftCompetenceHandler(
+                                session=self.session, model=models.SoftCompetence)
+                            competenceHandler.update(id_soft_competence=competence.id,
+                                                     id_station=competence_input.id_station,
+                                                     level_competence=competence_input.level_competence,
+                                                     last_assesement=competence_input.last_assesement,
+                                                     id_operateur=competence_input.id_operateur)
+                            print(
+                                f"(%) Competence updated - {competenceCSV_id_op} on {competenceCSV_idstation}")
+                            break
+                    else:
+                        competenceHandler = handlers.SoftCompetenceHandler(
+                            session=self.session, model=models.SoftCompetence)
+                        competenceHandler.create(competence_input)
+                        print(
+                            f"(+) Competence ajouter - {competenceCSV_id_op} on {competenceCSV_idstation}")
+                else:
+                    print(f"(?) Operateur non trouvé - {competenceCSV[1][1]}")
+            else:
+                print(f"(?) Station non trouvé - {competenceCSV[1][0]}")
+
+    def _update_ke(self, ke_input: schemas.KeCreate):
+        print("    (Mise a jour des KE)")
+        listKe = self.session.query(models.Ke).all()
+
+        for keCSV in self.df_KE.iterrows():
+            keCSVdate = self._cast_date(keCSV[1][4])
+            keCSVdate = datetime.strptime(keCSVdate, '%d/%m/%Y').date()
+            if keCSV[1][5] == ' ':
+                keCSVke = 0
+            else:
+                extract = keCSV[1][5].split(',')
+                keCSVke = int(extract[0])
+            if keCSV[1][6] == ' ':
+                keCSVtarget = 0
+            else:
+                extract = keCSV[1][6].split(',')
+                keCSVtarget = int(extract[0])
+
+            ke_input.date_ke = keCSVdate
+            ke_input.ke = keCSVke
+            ke_input.target_ke = keCSVtarget
+
+            for ke in listKe:
+                if (str(ke.date_ke)) == (str(ke_input.date_ke)):
+                    keHandler = handlers.KeHandler(
+                        session=self.session, model=models.Ke)
+                    keHandler.update(id_ke=ke.id_ke,
+                                     date_ke=ke_input.date_ke,
+                                     ke=ke_input.ke,
+                                     target_ke=ke_input.target_ke)
+                    print(f"(%) KE updated - {ke_input.date_ke}")
+                    break
+            else:
+                keHandler = handlers.KeHandler(
+                    session=self.session, model=models.Ke)
+                keHandler.create(ke_input)
+                print(f"(+) KE ajouter - {ke_input.date_ke}")
+
+    def _update_qty(self, qty_input: schemas.QtyCreate):
+        print("    (Mise a jour des QTY)")
+        listQty = self.session.query(models.Qty).all()
+
+        for qtyCSV in self.df_QTY.iterrows():
+            qtyCSVdate = self._cast_date(qtyCSV[1][4])
+            qtyCSVdate = datetime.strptime(qtyCSVdate, '%d/%m/%Y').date()
+            if qtyCSV[1][5] == ' ':
+                qtyCSVqty = 0
+            else:
+                extract = qtyCSV[1][5].split(',')
+                qtyCSVqty = int(extract[0])
+            if qtyCSV[1][6] == ' ':
+                qtyCSVtarget = 0
+            else:
+                extract = qtyCSV[1][6].split(',')
+                qtyCSVtarget = int(extract[0])
+
+            qty_input.date_qty = qtyCSVdate
+            qty_input.qty = qtyCSVqty
+            qty_input.target_qty = qtyCSVtarget
+
+            for qty in listQty:
+                if (str(qty.date_qty)) == (str(qty_input.date_qty)):
+                    qtyHandler = handlers.QtyHandler(
+                        session=self.session, model=models.Qty)
+                    qtyHandler.update(id_qty=qty.id_qty,
+                                      date_qty=qty_input.date_qty,
+                                      qty=qty_input.qty,
+                                      target_qty=qty_input.target_qty)
+                    print(f"(%) QTY updated - {qty_input.date_qty}")
+                    break
+            else:
+                qtyHandler = handlers.QtyHandler(
+                    session=self.session, model=models.Qty)
+                qtyHandler.create(qty_input)
+                print(f"(+) QTY ajouter - {qty_input.date_qty}")
+
+    def load(self):
+        self._update_operateur(operateur_input=schemas.OperateurCreate)
+        self._update_competence(competence_input=schemas.CompetenceCreate)
+        self._update_softcompetence(
+            competence_input=schemas.SoftCompetenceCreate)
+        self._update_ke(ke_input=schemas.KeCreate)
+        self._update_qty(qty_input=schemas.QtyCreate)

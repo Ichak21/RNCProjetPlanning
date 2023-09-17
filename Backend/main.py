@@ -393,23 +393,12 @@ def deleteQty(id_qty: int, force: bool = False, session: Session = Depends(get_s
 @app.get("/setting/init", response_model=None, status_code=status.HTTP_200_OK)
 def initiDB(session: Session = Depends(get_session)):
     initialisation = ETL.ETL_Loading_Init(session=session)
+    initialisation.dropAll()
     initialisation.extract()
     initialisation.load()
-
-
-@app.get("/setting/del", response_model=None, status_code=status.HTTP_200_OK)
-def initiDB(session: Session = Depends(get_session)):
-    initialisation = ETL.ETL_Loading_Init(session=session)
-    initialisation.dropAll()
-
 
 @app.get("/setting/update", response_model=None, status_code=status.HTTP_200_OK)
 def initiDB(session: Session = Depends(get_session)):
     update = ETL.ETL_Loading_Update(session=session)
     update.extract()
-    newKeValue = schemas.Ke(id_ke=200,
-                            date_ke=str('23/08/2023'), ke=55, target_ke=55)
-    keHandler = handlers.KeHandler(session=session, model=models.Ke)
-    keHandler.create(newKeValue)
-    # update.transform_ke()
-    # update.load()
+    update.load()
