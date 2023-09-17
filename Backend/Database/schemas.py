@@ -74,7 +74,7 @@ class Qty(QtyCreate):
 
 
 class UserCreate(BaseModel):
-    id_user: str
+    id_card: str
     login: str
     password: str
     start_date: str
@@ -82,7 +82,7 @@ class UserCreate(BaseModel):
 
 
 class User(UserCreate):
-    id_user: str
+    id_card: str
     login: str
     password: str
     start_date: str
@@ -99,8 +99,8 @@ class OperateurCreate(BaseModel):
     home_station: int
     start_date: str
     end_date: str
-    isTemp: bool
-    active_status: bool
+    isTemp: int
+    active_status: int
 
 
 class Operateur(OperateurCreate):
@@ -111,8 +111,8 @@ class Operateur(OperateurCreate):
     home_station: int
     start_date: str
     end_date: str
-    isTemp: bool
-    active_status: bool
+    isTemp: int
+    active_status: int
 
     class Config:
         orm_mode = True

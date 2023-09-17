@@ -24,12 +24,12 @@ class Shift(Base):
     __tablename__ = "shift"
     id_shift = Column(Integer, primary_key=True)
     name_shift = Column(String(20), nullable=False)
-    id_user = Column(String, ForeignKey("user.id_user"), nullable=False)
+    id_user = Column(String, ForeignKey("user.id_card"), nullable=False)
 
 
 class User(Base):
     __tablename__ = "user"
-    id_user = Column(String, primary_key=True)  # id_card
+    id_card = Column(String, primary_key=True)  # id_card
     login = Column(String(20), nullable=False)
     password = Column(String(20), nullable=False)
     start_date = Column(String, nullable=False)
@@ -62,8 +62,8 @@ class Operateur(Base):
         "station.id_station"), nullable=False)
     start_date = Column(String(10), nullable=False)
     end_date = Column(String(10))
-    isTemp = Column(Boolean, nullable=False)
-    active_status = Column(Boolean, nullable=False)
+    isTemp = Column(Integer, nullable=False)
+    active_status = Column(Integer, nullable=False)
 
 
 # Table de description des competence
@@ -102,7 +102,7 @@ class Planning(Base):
     id = Column(Integer, primary_key=True)
     id_operateur = Column(String, ForeignKey(
         "operateur.id_operateur"), nullable=False)
-    id_user = Column(Integer, ForeignKey("user.id_user"), nullable=False)
+    id_user = Column(Integer, ForeignKey("user.id_card"), nullable=False)
     id_shift = Column(Integer, ForeignKey("shift.id_shift"), nullable=False)
     id_station = Column(Integer, ForeignKey(
         "station.id_station"), nullable=False)

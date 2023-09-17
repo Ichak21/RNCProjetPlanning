@@ -214,7 +214,7 @@ class UserHandler(Handler):
 class OperateurHandler(Handler):
     def create(self, operateur: schemas.OperateurCreate):
         new_operateur = self.model(
-            id_card=operateur.id_card,
+            id_operateur=operateur.id_operateur,
             name_operateur=operateur.name_operateur,
             id_shift=operateur.id_shift,
             home_station=operateur.home_station,
@@ -240,12 +240,11 @@ class OperateurHandler(Handler):
 
         return listPeople
 
-    def update(self, id_operateur: int, id_card: int, name_operateur: str, id_shift: int, home_station: int,
+    def update(self, id_operateur: int, name_operateur: str, id_shift: int, home_station: int,
                start_date: date, end_date: date, isTemp: bool, active_status: bool):
         operateur = self.session.query(self.model).get(id_operateur)
 
         if operateur:
-            operateur.id_card = id_card
             operateur.name_operateur = name_operateur
             operateur.id_shift = id_shift
             operateur.home_station = home_station
