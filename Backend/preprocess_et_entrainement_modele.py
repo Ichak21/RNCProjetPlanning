@@ -35,18 +35,20 @@ qty_dict_list = [
 qtydf = pd.DataFrame(qty_dict_list)
 
 # creation QTYKPI
-QTYKPI = qtydf
+QTYKPI = qtydf.loc[qtydf.qty!=0]
 QTYKPI = QTYKPI.rename(columns={'date_qty':'Day','qty':'Value','target_qty':'Target'})
 QTYKPI.Value = QTYKPI.Value.replace(',','.', regex=True)
 QTYKPI.Value = QTYKPI.Value.astype('float')
+QTYKPI.Day = pd.to_datetime(QTYKPI.Day)
 for row in QTYKPI.iterrows():
     QTYKPI.loc[QTYKPI.Value >= QTYKPI.Target, 'target_met'] = 1
     QTYKPI.loc[QTYKPI.Value < QTYKPI.Target, 'target_met'] = 0
 # creation KEKPI
-KEKPI = kedf
+KEKPI = kedf.loc[kedf.ke!=0]
 KEKPI = KEKPI.rename(columns={'date_ke':'Day','ke':'Value','target_ke':'Target'})
 KEKPI.Value = KEKPI.Value.replace(',','.', regex=True)
 KEKPI.Value = KEKPI.Value.astype('float')
+KEKPI.Day = pd.to_datetime(KEKPI.Day)
 for row in KEKPI.iterrows():
     KEKPI.loc[KEKPI.Value >= KEKPI.Target, 'target_met'] = 1
     KEKPI.loc[KEKPI.Value < KEKPI.Target, 'target_met'] = 0
@@ -166,6 +168,8 @@ for row in personne_soft_skills.iterrows():
     personne_soft_skills.loc[personne_soft_skills['Location'] == 'Leader 5S', 'last_assesement_Leader 5S'] = personne_soft_skills['last_assesement']
 personne_soft_skills.last_assesement_SST = personne_soft_skills.last_assesement_SST.fillna(pd.to_datetime('1900-01-01'))
 personne_soft_skills['last_assesement_Leader 5S'] = personne_soft_skills['last_assesement_Leader 5S'].fillna(pd.to_datetime('1900-01-01'))
+personne_soft_skills.last_assesement_SST = pd.to_datetime(personne_soft_skills.last_assesement_SST)
+personne_soft_skills['last_assesement_Leader 5S'] = pd.to_datetime(personne_soft_skills['last_assesement_Leader 5S'])
 for operator in personne_soft_skills.Operator.unique():
         personne_soft_skills.loc[personne_soft_skills['Operator'] == operator, 'SST'] = personne_soft_skills.loc[personne_soft_skills['Operator'] == operator, 'SST'].max()
         personne_soft_skills.loc[personne_soft_skills['Operator'] == operator, 'Leader 5S'] = personne_soft_skills.loc[personne_soft_skills['Operator'] == operator, 'Leader 5S'].max()        
