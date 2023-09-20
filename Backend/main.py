@@ -8,6 +8,8 @@ import Database.schemas as schemas
 import Database.handlers as handlers
 import ETLs as ETL
 from datetime import date
+from fastapi.middleware.cors import CORSMiddleware
+
 
 # Create the database
 Base.metadata.create_all(engine)
@@ -24,6 +26,15 @@ def get_session():
 # Initialize app
 app = FastAPI()
 
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def root():

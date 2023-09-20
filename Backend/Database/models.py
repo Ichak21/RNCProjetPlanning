@@ -102,7 +102,7 @@ class Planning(Base):
     id = Column(Integer, primary_key=True)
     id_operateur = Column(String, ForeignKey(
         "operateur.id_operateur"), nullable=False)
-    id_user = Column(Integer, ForeignKey("user.id_card"), nullable=False)
+    id_user = Column(String, ForeignKey("user.id_card"), nullable=False)
     id_shift = Column(Integer, ForeignKey("shift.id_shift"), nullable=False)
     id_station = Column(Integer, ForeignKey(
         "station.id_station"), nullable=False)

@@ -29,13 +29,13 @@ class Station(StationCreate):
 
 class ShiftCreate(BaseModel):
     name_shift: str
-    id_user: int
+    id_user: str
 
 
 class Shift(ShiftCreate):
     id_shift: int
     name_shift: str
-    id_user: int
+    id_user: str
 
     class Config:
         orm_mode = True
@@ -156,7 +156,7 @@ class SoftCompetence(SoftCompetenceCreate):
 
 class PlanningCreate(BaseModel):
     id_operateur: str
-    id_user: int
+    id_user: str
     id_shift: int
     id_station: int
     date: str
@@ -167,7 +167,7 @@ class PlanningCreate(BaseModel):
 class Planning(PlanningCreate):
     id: int
     id_operateur: str
-    id_user: int
+    id_user: str
     id_shift: int
     id_station: int
     date: str
