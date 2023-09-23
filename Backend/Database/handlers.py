@@ -167,19 +167,19 @@ class QtyHandler(Handler):
         return super().create(newQty)
 
     def update(self, id_qty: int, date_qty: date, qty: int, target_qty: int):
-        qty = self.session.query(self.model).get(id_qty)
+        qty_request = self.session.query(self.model).get(id_qty)
 
-        if qty:
-            qty.date_qty = date_qty
-            qty.qty = qty
-            qty.target_qty = target_qty
+        if qty_request:
+            qty_request.date_qty = date_qty
+            qty_request.qty = qty
+            qty_request.target_qty = target_qty
             self.session.commit()
 
-        if not qty:
+        if not qty_request:
             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail=f"L'élément du qty avec l'ID {dateqty} n'a pas été trouvé")
+                status_code=status.HTTP_404_NOT_FOUND, detail=f"L'élément du qty avec l'ID {date_qty} n'a pas été trouvé")
 
-        return qty
+        return qty_request
 
 
 class UserHandler(Handler):

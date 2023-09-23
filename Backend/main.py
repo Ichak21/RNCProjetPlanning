@@ -9,6 +9,9 @@ import Database.handlers as handlers
 import ETLs as ETL
 from datetime import date
 from fastapi.middleware.cors import CORSMiddleware
+import preprocess_et_entrainement_modele as prepro
+import subprocess
+import model_magic_fulfill_et_ml_prod_react as fullfill
 
 
 # Create the database
@@ -39,6 +42,24 @@ app.add_middleware(
 @app.get("/")
 def root():
     return "Is alive !"
+
+# ROUTING FOR MAGIC FULL FILL [ML MODEL] ---------------------------------------------------
+@app.get("/setting/runprepro", response_model={}, status_code=status.HTTP_200_OK)
+def runPrepro(session: Session = Depends(get_session)):
+    try:
+        update = ETL.ETL_Loading_Update(session=session)
+        update.extract()
+        update.load()
+        # Utilisation de subprocess pour exécuter prepro.py
+        subprocess.run(["python", "preprocess_et_entrainement_modele.py"], check=True)
+        return {"message": "Le script de preprocessing a été exécuté avec succès."}
+    except subprocess.CalledProcessError as e:
+        return {"error": f"Erreur lors de l'exécution de prepro.py : {e}", "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR}
+
+@app.get("/setting/fullfll/{qty}", response_model={})
+def runFullFill(qty: int, session: Session = Depends(get_session)):
+    resu = fullfill.main(qty)
+    return resu
 
 # ROUTING FOR SETTINGS [SECTEUR] ---------------------------------------------------
 
