@@ -39,11 +39,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/")
 def root():
     return "Is alive !"
 
 # ROUTING FOR MAGIC FULL FILL [ML MODEL] ---------------------------------------------------
+
+
 @app.get("/setting/runprepro", response_model={}, status_code=status.HTTP_200_OK)
 def runPrepro(session: Session = Depends(get_session)):
     try:
@@ -51,10 +54,12 @@ def runPrepro(session: Session = Depends(get_session)):
         update.extract()
         update.load()
         # Utilisation de subprocess pour exécuter prepro.py
-        subprocess.run(["python", "preprocess_et_entrainement_modele.py"], check=True)
+        subprocess.run(
+            ["python", "preprocess_et_entrainement_modele.py"], check=True)
         return {"message": "Le script de preprocessing a été exécuté avec succès."}
     except subprocess.CalledProcessError as e:
         return {"error": f"Erreur lors de l'exécution de prepro.py : {e}", "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR}
+
 
 @app.get("/setting/fullfll/{qty}", response_model={})
 def runFullFill(qty: int, session: Session = Depends(get_session)):
@@ -429,8 +434,97 @@ def initiDB(session: Session = Depends(get_session)):
     initialisation.extract()
     initialisation.load()
 
+
 @app.get("/setting/update", response_model=None, status_code=status.HTTP_200_OK)
 def initiDB(session: Session = Depends(get_session)):
     update = ETL.ETL_Loading_Update(session=session)
     update.extract()
     update.load()
+
+
+@app.get("/translatestation/{station_name}", response_model=str, status_code=status.HTTP_200_OK)
+def translate(station_name: str, session: Session = Depends(get_session)):
+    station_id = 0
+    stationdf_conversion_dict_str_contains = {
+        "330_CONTROL_ADAPT": "330 Contrï¿½le adaptation",
+        "302_HABILLAGE_D2S": "302 D2S",
+        "340_HABILLAGE_DET": "340 Ligne DET",
+        "320_HABILLAGE_DEMT": "320 DEMT Affaires SP",
+        "514_CABLAGE": "310 Cablage caissons",
+        "514_FILERIE": "514 Filerie",
+        "516C_MOTEUR": "514 Moteurs",
+        "800C_CI": "516C Composant Indus",
+        "800C_IQE": "800C IQE",
+        "850D_DECHARGEMENT": "850D Dechargement Camions",
+        "510D": "510D",
+        "850A_RECEPTION": "850A Reception Magasin",
+        "850B_TRAIN1": "850B Livraison BDL Train 1",
+        "500_ROBOT_ASS": "500 Robot Assemblage",
+        "502_HELLIUM": "505Controle etancheitï¿½ Helium",
+        "502_MI": "502 Montage Interne",
+        "501_SALLE_PROPRE": "501 Salle Propre",
+        "504_CMI": "504 CMI",
+        "503_COMMANDE_IP": "503 Commandes I/P",
+        "504_ROBOT_FERMETURE": "504 Robot de Fermeture",
+        "503_COMMANDE_QD": "503 Commandes Q/D",
+        "402_CONTROLE_HT": "507Controle HT",
+        "412_EMBALLAGE": "510 Emballage",
+        "408_EQF4": "508 EQF4",
+        "403_PREHENSEUR": "507 Prï¿½henseur Habillage",
+        "406_EQF2": "508 EQF2",
+        "401_FIC_&_INTERVEROUILLAGE": "506 FIC",
+        "404_COLLECTEUR_&_BRIDAGE": "508 EQF1",
+        "410_CONTROLE_BT": "509 Controle BT1",
+        "411_CONTROLE_FINAL": "509 Contrï¿½le BT2",
+        "407_EQF3": "508 EQF3",
+        "505_PASS": "505 Passivation",
+        "301_NKT": "301 NKT",
+        "Safety": "Safety",
+        "SPS & Lean": "SPS & Lean",
+        "SIM": "SIM",
+        "Ergonomics": "Ergonomics",
+        "Manipulation des Robots": "Manipulation des Robots",
+        "Programmation trajectoire & recalage": "Programmation trajectoire & recalage",
+        "Soudure TIG": "Soudure TIG",
+        "Soudure MIG": "Soudure MIG",
+        "CACES 1": "CACES 1",
+        "CACES 2": "CACES 2",
+        "CACES 3": "CACES 3",
+        "CACES 4": "CACES 4",
+        "CACES 5": "CACES 5",
+        "CACES NACELLE": "CACES NACELLE",
+        "Transpalette electrique": "Transpalette electrique",
+        "Chariot motorise": "Chariot motorise",
+        "Manipulation de SF6": "Manipulation de SF6",
+        "Secouriste": "Secouriste",
+        "Pompiers": "Pompiers",
+        "Habilitation elec": "Habilitation elec",
+        "Habillitation ATEX": "Habillitation ATEX",
+        "Informatique Production": "Informatique Production",
+        "Informatique Magasin": "Informatique Magasin",
+        "Informatique Maintenance": "Informatique Maintenance",
+        "Informatique IQE": "Informatique IQE",
+        "Informatique Qualite": "Informatique Qualite",
+        "Informatique Lancement": "Informatique Lancement",
+        "Local rï¿½paration": "Local rï¿½paration",
+        "Safety Leader": "Safety Leader",
+        "Referent AIC": "Referent AIC",
+        "Leader 5S": "Leader 5S",
+        "AZ": "AZ",
+        "XX_MALADIE": "XX_MALADIE",
+        "XX_DELEGATION": "XX_DELEGATION",
+        "XX_CONGES": "XX_CONGES",
+        "XX_FORMATION_EXT": "XX_FORMATION_EXT",
+        "XX_PRET": "XX_PRET",
+        "EXPEDITION": "Expedition",
+        "S/E": "Sous ensemble"
+    }
+    if station_name in stationdf_conversion_dict_str_contains:
+        for cle, valeur in stationdf_conversion_dict_str_contains.items():
+            if station_name in cle:
+                station_id = session.query(models.Station).filter(
+                    models.Station.name_station == valeur).first().id_station
+    else:
+        station_name = 0
+
+    return station_id
