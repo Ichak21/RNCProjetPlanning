@@ -442,7 +442,7 @@ def initiDB(session: Session = Depends(get_session)):
     update.load()
 
 
-@app.get("/translatestation/{station_name}", response_model=str, status_code=status.HTTP_200_OK)
+@app.get("/translatestation/{station_name}", response_model={}, status_code=status.HTTP_200_OK)
 def translate(station_name: str, session: Session = Depends(get_session)):
     station_id = 0
     stationdf_conversion_dict_str_contains = {
@@ -527,4 +527,4 @@ def translate(station_name: str, session: Session = Depends(get_session)):
     else:
         station_name = 0
 
-    return station_id
+    return {station_id, station_name}
