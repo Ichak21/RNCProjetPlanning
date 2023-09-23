@@ -442,7 +442,7 @@ def initiDB(session: Session = Depends(get_session)):
     update.load()
 
 
-@app.get("/translatestation/{station_name}", response_model={}, status_code=status.HTTP_200_OK)
+@app.get("/cleanNameToId/{station_name}", response_model=schemas.retourStation, status_code=status.HTTP_200_OK)
 def translate(station_name: str, session: Session = Depends(get_session)):
     station_id = 0
     stationdf_conversion_dict_str_contains = {
@@ -527,4 +527,92 @@ def translate(station_name: str, session: Session = Depends(get_session)):
     else:
         station_name = 0
 
-    return {station_id, station_name}
+    return schemas.retourStation(id_station=station_id, clean_name=station_name)
+
+
+@app.get("/idToCleanName/{station_id}", response_model=schemas.retourStation, status_code=status.HTTP_200_OK)
+def translate(station_id: int, session: Session = Depends(get_session)):
+    station_name = "ERROR_NAME"
+    stationdf_conversion_dict_str_contains = {
+        "330 Contrï¿½le adaptation": "330_CONTROL_ADAPT",
+        "302 D2S": "302_HABILLAGE_D2S",
+        "340 Ligne DET": "340_HABILLAGE_DET",
+        "320 DEMT Affaires SP": "320_HABILLAGE_DEMT",
+        "310 Cablage caissons": "514_CABLAGE",
+        "514 Filerie": "514_FILERIE",
+        "514 Moteurs": "516C_MOTEUR",
+        "516C Composant Indus": "800C_CI",
+        "800C IQE": "800C_IQE",
+        "850D Dechargement Camions": "850D_DECHARGEMENT",
+        "510D": "510D",
+        "850A Reception Magasin": "850A_RECEPTION",
+        "850B Livraison BDL Train 1": "850B_TRAIN1",
+        "500 Robot Assemblage": "500_ROBOT_ASS",
+        "505Controle etancheitï¿½ Helium": "502_HELLIUM",
+        "502 Montage Interne": "502_MI",
+        "501 Salle Propre": "501_SALLE_PROPRE",
+        "504 CMI": "504_CMI",
+        "503 Commandes I/P": "503_COMMANDE_IP",
+        "504 Robot de Fermeture": "504_ROBOT_FERMETURE",
+        "503 Commandes Q/D": "503_COMMANDE_QD",
+        "507Controle HT": "402_CONTROLE_HT",
+        "510 Emballage": "412_EMBALLAGE",
+        "508 EQF4": "408_EQF4",
+        "507 Prï¿½henseur Habillage": "403_PREHENSEUR",
+        "508 EQF2": "406_EQF2",
+        "506 FIC": "401_FIC_&_INTERVEROUILLAGE",
+        "508 EQF1": "404_COLLECTEUR_&_BRIDAGE",
+        "509 Controle BT1": "410_CONTROLE_BT",
+        "509 Contrï¿½le BT2": "410_CONTROLE_BT",
+        "509 Controle Final": "411_CONTROLE_FINAL",
+        "508 EQF3": "407_EQF3",
+        "505 Passivation": "505_PASS",
+        "301 NKT": "301_NKT",
+        "Safety": "Safety",
+        "SPS & Lean": "SPS & Lean",
+        "SIM": "SIM",
+        "Ergonomics": "Ergonomics",
+        "Manipulation des Robots": "Manipulation des Robots",
+        "Programmation trajectoire & recalage": "Programmation trajectoire & recalage",
+        "Soudure TIG": "Soudure TIG",
+        "Soudure MIG": "Soudure MIG",
+        "CACES 1": "CACES 1",
+        "CACES 2": "CACES 2",
+        "CACES 3": "CACES 3",
+        "CACES 4": "CACES 4",
+        "CACES 5": "CACES 5",
+        "CACES NACELLE": "CACES NACELLE",
+        "Transpalette electrique": "Transpalette electrique",
+        "Chariot motorise": "Chariot motorise",
+        "Manipulation de SF6": "Manipulation de SF6",
+        "Secouriste": "Secouriste",
+        "Pompiers": "Pompiers",
+        "Habilitation elec": "Habilitation elec",
+        "Habillitation ATEX": "Habillitation ATEX",
+        "Informatique Production": "Informatique Production",
+        "Informatique Magasin": "Informatique Magasin",
+        "Informatique Maintenance": "Informatique Maintenance",
+        "Informatique IQE": "Informatique IQE",
+        "Informatique Qualite": "Informatique Qualite",
+        "Informatique Lancement": "Informatique Lancement",
+        "Local rï¿½paration": "Local rï¿½paration",
+        "Safety Leader": "Safety Leader",
+        "Referent AIC": "Referent AIC",
+        "Leader 5S": "Leader 5S",
+        "AZ": "AZ",
+        "XX_MALADIE": "XX_MALADIE",
+        "XX_DELEGATION": "XX_DELEGATION",
+        "XX_CONGES": "XX_CONGES",
+        "XX_FORMATION_EXT": "XX_FORMATION_EXT",
+        "XX_PRET": "XX_PRET",
+        "Expedition": "EXPEDITION",
+        "Sous ensemble": "S/E"
+    }
+    station_poorname = session.query(
+        models.Station).get(station_id).name_station
+    print(station_poorname)
+    for cle, valeur in stationdf_conversion_dict_str_contains.items():
+        if station_poorname in cle:
+            station_name = valeur
+
+    return schemas.retourStation(id_station=station_id, clean_name=station_name)

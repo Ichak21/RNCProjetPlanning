@@ -204,3 +204,7 @@ class Init(InitCreate):
 
     class Config:
         orm_mode = True
+
+class retourStation(BaseModel):
+    id_station: int
+    clean_name: str
