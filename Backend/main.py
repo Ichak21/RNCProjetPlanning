@@ -192,7 +192,7 @@ def readShift(id_shift: int, session: Session = Depends(get_session)):
 
 
 @app.put("/setting/shift/{id_shift}", response_model=schemas.Shift)
-def updateShift(id_shift: int, name_shift: str, id_user: int, session: Session = Depends(get_session)):
+def updateShift(id_shift: int, name_shift: str, id_user: str, session: Session = Depends(get_session)):
     shift = handlers.ShiftHandler(session=session, model=models.Shift)
     return shift.update(id_shift=id_shift, name_shift=name_shift, id_user=id_user)
 
@@ -218,19 +218,19 @@ def readAllUsers(session: Session = Depends(get_session)):
 
 
 @app.get("/setting/user/{id_user}", response_model=schemas.User, status_code=status.HTTP_200_OK)
-def readUser(id_user: int, session: Session = Depends(get_session)):
+def readUser(id_user: str, session: Session = Depends(get_session)):
     user = handlers.UserHandler(session=session, model=models.User)
     return user.read(id=id_user)
 
 
 @app.put("/setting/user/{id_user}", response_model=schemas.User)
-def updateUser(id_user: int, id_card: str, login: str, password: str, start_date: date, end_date: date, session: Session = Depends(get_session)):
+def updateUser(id_user: str, id_card: str, login: str, password: str, start_date: str, end_date: str, session: Session = Depends(get_session)):
     user = handlers.UserHandler(session=session, model=models.User)
     return user.update(id_user=id_user, id_card=id_card, login=login, password=password, start_date=start_date, end_date=end_date)
 
 
 @app.delete("/setting/user/{id_user}", response_model=schemas.User, status_code=status.HTTP_200_OK)
-def deleteUser(id_user: int, force: bool = False, session: Session = Depends(get_session)):
+def deleteUser(id_user: str, force: bool = False, session: Session = Depends(get_session)):
     user = handlers.UserHandler(session=session, model=models.User)
     return user.delete(id_user)
 
@@ -259,21 +259,21 @@ def readAllOperateursTrained(session: Session = Depends(get_session)):
 
 
 @app.get("/setting/operateur/{id_operateur}", response_model=schemas.Operateur, status_code=status.HTTP_200_OK)
-def readOperateur(id_operateur: int, session: Session = Depends(get_session)):
+def readOperateur(id_operateur: str, session: Session = Depends(get_session)):
     operateur = handlers.OperateurHandler(
         session=session, model=models.Operateur)
     return operateur.read(id=id_operateur)
 
 
 @app.put("/setting/operateur/{id_operateur}", response_model=schemas.Operateur)
-def updateOperateur(id_operateur: int, id_card: int, name_operateur: str, id_shift: int, home_station: int, start_date: date, end_date: date, isTemp: bool, active_status: bool, session: Session = Depends(get_session)):
+def updateOperateur(id_operateur: str, name_operateur: str, id_shift: int, home_station: int, start_date: str, end_date: str, isTemp: int, active_status: int, session: Session = Depends(get_session)):
     operateur = handlers.OperateurHandler(
         session=session, model=models.Operateur)
-    return operateur.update(id_operateur=id_operateur, id_card=id_card, name_operateur=name_operateur, id_shift=id_shift, home_station=home_station, start_date=start_date, end_date=end_date, isTemp=isTemp, active_status=active_status)
+    return operateur.update(id_operateur=id_operateur, name_operateur=name_operateur, id_shift=id_shift, home_station=home_station, start_date=start_date, end_date=end_date, isTemp=isTemp, active_status=active_status)
 
 
 @app.delete("/setting/operateur/{id_operateur}", response_model=schemas.Operateur, status_code=status.HTTP_200_OK)
-def deleteOperateur(id_operateur: int, force: bool = False, session: Session = Depends(get_session)):
+def deleteOperateur(id_operateur: str, force: bool = False, session: Session = Depends(get_session)):
     operateur = handlers.OperateurHandler(
         session=session, model=models.Operateur)
     return operateur.delete(id_operateur)
@@ -303,7 +303,7 @@ def readCompetence(id_competence: int, session: Session = Depends(get_session)):
 
 
 @app.put("/setting/competence/{id_competence}", response_model=schemas.Competence)
-def updateCompetence(id_competence: int, id_station: int, level_competence: int, last_assesement: date, id_operateur: int, session: Session = Depends(get_session)):
+def updateCompetence(id_competence: int, id_station: int, level_competence: int, last_assesement: date, id_operateur: str, session: Session = Depends(get_session)):
     competence = handlers.CompetenceHandler(
         session=session, model=models.Competence)
     return competence.update(id_competence=id_competence, id_station=id_station, level_competence=level_competence, last_assesement=last_assesement, id_operateur=id_operateur)
@@ -339,7 +339,7 @@ def readPlanning(id_planning: int, session: Session = Depends(get_session)):
 
 
 @app.put("/setting/planning/{id_planning}", response_model=schemas.Planning)
-def updatePlanning(id_planning: int, date_planning: date, id_operateur: int, id_shift: int, session: Session = Depends(get_session)):
+def updatePlanning(id_planning: int, date_planning: date, id_operateur: str, id_shift: int, session: Session = Depends(get_session)):
     planning = handlers.PlanningHandler(session=session, model=models.Planning)
     return planning.update(id_planning=id_planning, date_planning=date_planning, id_operateur=id_operateur, id_shift=id_shift)
 
