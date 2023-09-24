@@ -1,0 +1,124 @@
+.main-operator {
+  overflow-y: scroll;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.operator-search-bar {
+  width: 100%;
+  justify-content: space-between;
+  display: flex;
+}
+
+.operator-search-hr {
+  margin: 14px 0 14px 0;
+  border-color: #f4f4f4;
+  width: 50%;
+}
+
+.input-wrapper {
+  width: 50%;
+  height: 2.5rem;
+  border: none;
+  padding: 0 15px;
+  background-color: none;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper input {
+  background-color: transparent;
+  border: none;
+  height: 100%;
+  font-size: 1.25rem;
+  width: 100%;
+  margin-left: 5px;
+}
+
+input:focus {
+  outline: none;
+}
+
+#search-icon {
+  color: gray;
+}
+
+.button-add-operator {
+  height: 40px;
+  width: 40px;
+  border-radius: 50px;
+  background-color: #3dcd58;
+  color: white;
+  font-size: 22px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 5px 8px rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+}
+
+.button-add-operator:active {
+  background-color: #2da443;
+}
+
+.status-icon-active {
+  color: #3dcd58;
+  font-size: 20px;
+}
+.status-icon-inactive {
+  color: red;
+  font-size: 20px;
+}
+
+.btn-edit-operator {
+  color: #8e8f92;
+  border: none;
+  background: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.btn-edit-operator:hover {
+  color: black;
+}
+
+.btn-delete-operator {
+  color: red;
+  border: none;
+  background: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.btn-delete-operator:hover {
+  color: brown;
+}
+
+@media (max-width: 1280px) {
+  .data-table-container {
+    max-width: 750px;
+  }
+}
+
+@media (max-width: 992px) {
+  .data-table-container {
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 768px) {
+  .data-table-container {
+    max-width: 575px;
+  }
+}
+
+.add-operator-modal {
+  position: fixed;
+  top: 0;
+  left: 17%;
+}

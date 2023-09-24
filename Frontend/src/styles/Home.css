@@ -1,0 +1,358 @@
+.main-home {
+  display: block;
+  flex-direction: column;
+  padding-left: 20px;
+  padding-right: 20px;
+  max-height: 85vh;
+  overflow-y: scroll;
+}
+
+/* ===============================================================================================
+                                    DATAS SECTION
+==================================================================================================
+*/
+
+/* DASHBOARD */
+.main-home-datas-section {
+  display: block;
+  justify-content: space-around;
+  height: 100%;
+  padding-bottom: 22px;
+}
+
+.home-dashboard-section {
+  color: white;
+  height: 100px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.home-presence-dashboard {
+  background-color: #5ce676;
+  margin-right: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  height: 100px;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.home-presence-dashboard span {
+  font-size: 20px;
+  font-weight: 600;
+  word-spacing: 2px;
+}
+
+.home-absence-dashboard {
+  background-color: #ca2828;
+  margin-right: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  height: 100px;
+  border-radius: 10px;
+}
+
+.home-absence-dashboard span {
+  font-size: 20px;
+  font-weight: 600;
+  word-spacing: 2px;
+}
+
+/* ===============================================================================================
+                                    PLANNING SELECTION
+==================================================================================================
+*/
+
+.main-home-planning {
+  display: block;
+  flex-direction: column;
+}
+
+.main-planning-items {
+  /* background-color: white; */
+  height: 60px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-around;
+  padding-bottom: 10px;
+}
+
+.main-planning-table {
+  display: flex;
+  justify-content: center;
+}
+
+/*PRESENSE*/
+.presence-selection {
+  display: flex;
+  width: 15%;
+  cursor: pointer;
+  align-items: center;
+  user-select: none;
+}
+
+.presence-selection input[type="radio"] {
+  display: none;
+}
+
+.presence-selection label {
+  display: flex;
+  color: rgb(173, 173, 173);
+  border: 2px solid rgb(173, 173, 173);
+  align-items: center;
+  justify-content: center;
+  height: 80%;
+  width: 90%;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 5px;
+  border-radius: 10px;
+  background-color: white;
+}
+.presence-selection input[type="radio"]:checked + label {
+  color: #3dcd58;
+  border: 3px solid #3dcd58;
+  font-weight: 400;
+}
+
+/*WEEK*/
+.week-selection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  color: #292d32;
+}
+
+.button-prev-week {
+  cursor: pointer;
+  border: none;
+  background-color: #f3f4f8;
+  font-size: 35px;
+}
+
+.button-next-week {
+  cursor: pointer;
+  border: none;
+  background-color: #f3f4f8;
+  font-size: 35px;
+}
+
+.month-year-text {
+  color: #555658;
+  font-size: 20px;
+  font-weight: 600;
+}
+.week-dropdown {
+  color: #3dcd58;
+  font-size: 18px;
+  border: none;
+  background-color: #f3f4f8;
+}
+
+.pdf-and-shift {
+  width: 15%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+/*SHIFT*/
+.shift-selection {
+  display: flex;
+  align-items: center;
+  user-select: none;
+  cursor: pointer;
+  /* background-color: #66e17d; */
+}
+
+.inactive {
+  color: #3dcd58; /* Couleur verte lorsque le switch est OFF */
+}
+
+/* Styles pour le texte "A-M" lorsque le switch est ON */
+.active {
+  color: #8e8f92; /* Couleur verte lorsque le switch est ON */
+}
+
+/*PDF*/
+
+.home-pdf-section {
+  /* background-color: #66e17d; */
+  width: 20%;
+  height: 100px;
+  border-radius: 20px;
+  padding-bottom: 5px;
+}
+
+.pdf-button {
+  cursor: pointer;
+  border: none;
+  height: 35px;
+  width: 30px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* ===============================================================================================
+                                    PLANNING TABLE
+==================================================================================================
+*/
+
+/*TABLE SECTION*/
+
+.home-operator-name {
+  font-weight: 600;
+}
+
+table {
+  border-collapse: collapse;
+  border: 2px solid black;
+}
+.different-station {
+  border-top: 2px solid #000; /* Ajoute une bordure en haut des lignes différentes */
+}
+
+th {
+  padding: 15px 7px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 10px;
+  background-color: #358543;
+  color: white;
+  font-weight: 900;
+  border-right: 1px solid #000; /* 1px de bordure solide noire à droite */
+  border-left: 1px solid #000; /* 1px de bordure solide noire à droite */
+}
+
+.table-equipe {
+  background-color: #ecc151;
+}
+
+.sub-col-compt th {
+  background-color: #56bd69;
+}
+
+/* Appliquer une bordure droite aux cellules de données (<td>) */
+td {
+  padding: 4px 4px;
+  font-size: 12px;
+  border-right: 1px solid #000;
+  border-left: 1px solid #000; /* 1px de bordure solide noire à droite */
+}
+
+.home-station {
+  border-radius: 3px;
+  background-color: #cf5c78;
+  color: white;
+  text-align: center;
+  padding: 5px 5px;
+  font-weight: 700;
+}
+
+/* ============= Code couleur pour chaque station ============*/
+
+/* 506 FIC */
+.home-station[data-station="27"] {
+  background-color: #de78f5;
+  /* color: #48274f; */
+  color: white;
+}
+
+/* 507Controle HT */
+.home-station[data-station="22"] {
+  background-color: #85a5cc;
+  /* color: #30395c; */
+  color: white;
+}
+
+/* 507 PrÈhenseur Habillage */
+.home-station[data-station="25"] {
+  background-color: #08c5d1;
+  /* color: #00353f; */
+  color: white;
+}
+
+/* 508 EQF1 */
+.home-station[data-station="28"] {
+  background-color: #03a688;
+  /* color: #10403b; */
+  color: white;
+}
+
+/* 508 EQF2 */
+.home-station[data-station="26"] {
+  background-color: #c0d904;
+  /* color: #3a592c; */
+  color: white;
+}
+
+/* 508 EQF3 */
+.home-station[data-station="32"] {
+  background-color: #8c8303;
+  /* color: #244009; */
+  color: white;
+}
+
+/* 508 EQF4 */
+.home-station[data-station="24"] {
+  background-color: #8abf9c;
+  /* color: #10403b; */
+  color: white;
+}
+
+/* 509 Controle BT1 */
+.home-station[data-station="29"] {
+  background-color: #f99f72;
+  /* color: #5b374d; */
+  color: white;
+}
+
+/* 509 Controle Final */
+.home-station[data-station="31"] {
+  background-color: #be9cc7;
+  /* color: #211a44; */
+  color: white;
+}
+
+/* 509 ContrÙle BT2 */
+.home-station[data-station="30"] {
+  background-color: #c684b5;
+  /* color: #291527; */
+  color: white;
+}
+
+/* 510 Emballage */
+.home-station[data-station="23"] {
+  background-color: #f09569;
+  /* color: #6f4824; */
+  color: white;
+}
+
+/* ===============================================================================================
+                                    PRINT TABLE
+==================================================================================================
+*/
+
+@media print {
+  @page {
+    size: 16.5in 23.4in;
+  }
+  /* @page {
+    size: landscape A3;
+  } */
+
+  .home-pdf-section{
+    display: none;
+  }
+
+  .main-home {
+    overflow-y: visible !important;
+  }
+}

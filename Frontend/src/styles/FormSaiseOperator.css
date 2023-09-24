@@ -1,0 +1,36 @@
+.saisie-op-main {
+  padding-right: 50px;
+}
+
+.text-explication-saisieOne {
+  font-weight: 450;
+  font-size: 20px;
+  font-style: italic;
+  color: rgb(75, 75, 75);
+}
+
+.saisie-shift-and-continue {
+  width: 40%;
+  display: flex;
+  height: 400px;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.shift-selection-radio {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.MuiFormGroup-root {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.saisie-list-op-shift {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

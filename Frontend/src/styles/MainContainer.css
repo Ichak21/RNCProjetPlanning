@@ -1,0 +1,135 @@
+.container {
+  display: flex;
+}
+
+/* SIDEBAR */
+.sidebar-container {
+  width: 20vw;
+  background-color: #3dcd58;
+  padding: 20px 0px 20px 20px;
+  height: 100vh;
+}
+
+.container-logo-sidebar {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 100px;
+}
+
+.logo-se-white-sidebar {
+  width: 185px;
+  height: 65px;
+}
+
+.hr-logo {
+  border-bottom: white 1.5px solid;
+  margin: 5px 30px 30px 30px;
+}
+
+.sidebar-links {
+  font-size: 22px;
+  font-family: "Roboto, sans-serif";
+}
+
+.sidebar-links ul,
+ol,
+li {
+  list-style: none;
+  text-decoration: none;
+  color: white;
+}
+
+.sidebar-links span {
+  margin-left: 15px;
+}
+
+.sidebar-icon {
+  font-size: 20px;
+}
+
+.sidebar-link-text {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-family: "Roboto";
+  padding: 25px 0px 10px 40px;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.sidebar-link-text a {
+  list-style: none;
+  text-decoration: none;
+  color: white;
+  width: 95%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  right: 0;
+  position: absolute;
+}
+
+.sidebar-link-text a:hover {
+  font-weight: bold;
+  color: #3dcd58;
+  background-color: white;
+  border-radius: 7px 0px 0px 7px;
+}
+
+/* MAINCONTENT */
+.main-content {
+  flex-direction: row;
+  width: 100%;
+}
+
+@media (max-width: 1440px) {
+  .logo-se-white-sidebar {
+    width: 125px;
+    height: 50px;
+  }
+  .sidebar-links {
+    font-size: 18px;
+    font-family: "Roboto, sans-serif";
+  }
+
+  .sidebar-links span {
+    margin-left: 12px;
+  }
+
+  .sidebar-icon {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .sidebar-links {
+    font-size: 16px;
+    font-family: "Roboto, sans-serif";
+  }
+
+  .sidebar-links span {
+    margin-left: 10px;
+  }
+
+  .sidebar-icon {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 920px) {
+  .sidebar-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Ajustez la hauteur selon vos besoins */
+  }
+
+  .sidebar-container {
+    padding: 0;
+  }
+
+  .sidebar-icon {
+    font-size: 25px;
+  }
+}

@@ -1,0 +1,38 @@
+.notif-button {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  border-radius: 50%;
+  color: #333333;
+  background-color: #dddddd;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notif-button:hover {
+  font-weight: 700;
+}
+
+.notif-icon {
+  font-size: 28px;
+}
+
+.notif-out-value {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  position: absolute;
+  top: 1px;
+  right: 0px;
+  color: rgb(255, 0, 0);
+  border-radius: 50px;
+  width: 30px;
+}

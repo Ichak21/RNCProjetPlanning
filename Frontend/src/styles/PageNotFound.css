@@ -1,0 +1,59 @@
+.error-main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: white;
+}
+
+.error-img {
+  height: 500;
+  width: 500px;
+}
+
+.error-title {
+  color: rgb(63, 61, 86);
+}
+
+.error-msg-content {
+  color: #4b5563;
+}
+
+.redirect-links {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  text-decoration: none;
+}
+
+.redirect-links a {
+  text-decoration: none;
+}
+.redirect-home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 130px;
+  background-color: #3dcd58;
+  border-radius: 5px;
+  color: white;
+  font-weight: 600;
+}
+
+.redirect-home:active {
+  background-color: #2da443;
+}
+
+.redirect-support a {
+  font-weight: 800;
+  color: rgb(63, 61, 86);
+}
+
+@media (max-width: 768px) {
+  .error-img {
+    max-width: 300px;
+    max-width: 300px;
+  }
+}

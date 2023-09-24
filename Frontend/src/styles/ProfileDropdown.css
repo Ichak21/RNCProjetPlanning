@@ -1,0 +1,44 @@
+.dropdown {
+  position: absolute;
+  top: 68px;
+  right: -35px;
+  width: 250px;
+  transform: translateX(-20%);
+  background-color: #f1f1f1;
+  color: black;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  padding: 1rem;
+  overflow: hidden;
+  transition: height 500ms ease;
+  z-index: 2;
+}
+
+.dropdown hr {
+  color: #d9d9d9;
+  border: 0.5px solid #d9d9d9;
+}
+
+.menu-item {
+  text-decoration: none;
+  color: black;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  transition: background 300ms;
+  padding: 0.5rem;
+  justify-content: space-around;
+  z-index: 2;
+}
+
+.menu-item:hover {
+  background-color: #66e17d;
+}
+
+.teamleader-title {
+  font-size: 15px;
+  font-weight: 550;
+  font-style: italic;
+  color: rgba(63, 61, 86, 0.6);
+}

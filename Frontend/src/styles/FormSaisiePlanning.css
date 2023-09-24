@@ -1,0 +1,101 @@
+.main-planningForm {
+  overflow-y: scroll;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.saisie-fullfill-add {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fullfill-saisie-button {
+  border: none;
+  border-radius: 6px;
+  background-color: #3dcd58;
+  box-shadow: 0 2px #2e8a3f;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  height: 30px;
+  width: 75px;
+  padding: 9px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fullfill-saisie-button:active {
+  border: none;
+  border-radius: 6px;
+  background-color: #2da443;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  height: 25px;
+  padding: 9px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fullfill-metrics {
+  display: flex;
+  flex-direction: row;
+  font-weight: 600;
+}
+
+.fullfill-metrics p {
+  margin-right: 15px;
+}
+
+.metrics-span {
+  font-style: italic;
+  color: rgb(26, 26, 26);
+}
+
+.button-add-planning {
+  height: 40px;
+  width: 40px;
+  border-radius: 50px;
+  background-color: #3dcd58;
+  color: white;
+  font-size: 22px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 5px 8px rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+}
+
+.button-add-operator:active {
+  background-color: #2da443;
+}
+
+.add-pl-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding-right: 3%;
+  padding-bottom: 10px;
+}
+
+.add-planning-modal {
+  position: fixed;
+  top: 0;
+  left: 17%;
+}
+
+.btn-pl-main {
+  display: flex;
+  margin-top: 10px;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
